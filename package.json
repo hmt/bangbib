@@ -1,0 +1,41 @@
+{
+  "name": "bangbib",
+  "author": "hmt",
+  "version": "1.0.0",
+  "main": "build/main.js",
+  "private": true,
+  "scripts": {
+    "build": "rollup --config",
+    "start": "npm run build && run-s start:*",
+    "dev": "rollup -c && run-p dev:*",
+    "package-win": "electron-packager . --overwrite --name=bangbib --platform=win32  --arch=ia32 --icon=icons/icon.ico  --asar --out=release",
+    "package-mac": "electron-packager . --overwrite --name=bangbib --platform=darwin --arch=x64  --icon=icons/icon.icns --asar --out=release",
+    "package-linux": "electron-packager . --overwrite --name=bangbib --platform=linux  --arch=x64  --icon=icons/icon.png  --asar --out=release",
+    "start:electron": "electron .",
+    "dev:development": "rollup --config --watch",
+    "dev:electron": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^8.0.0",
+    "electron-packager": "^14.2.0",
+    "electron-rebuild": "^1.10.0",
+    "electron-wix-msi": "^2.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "prettier-plugin-svelte": "^0.7.0",
+    "rollup": "^1.31.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-externals": "^2.1.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^5.1.1",
+    "svelte": "^3.18.1"
+  },
+  "dependencies": {
+    "better-sqlite3": "^5.4.3",
+    "bulma": "^0.8.0",
+    "electron-store": "^5.1.0",
+    "electron-util": "^0.13.1",
+    "papaparse": "^5.1.1"
+  }
+}
