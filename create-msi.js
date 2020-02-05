@@ -25,5 +25,5 @@ async function createMSI () {
 createMSI().then(() => {
   console.log('MSI erfolgreich erstellt')
 }, (e) => {
-  console.log('Fehler beim erstellen der MSI')
+  console.log('Fehler beim erstellen der MSI', e)
 })
