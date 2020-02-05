@@ -8,3 +8,4 @@ build/*.map
 .vscode
 schild-report.code-workspace
 *.sqlite
+dist

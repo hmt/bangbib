@@ -1,10 +1,28 @@
 import { join } from 'path'
+// const join = require('path').join
 import url from 'url'
+// const url = require('url')
 import { app, BrowserWindow, ipcMain } from 'electron'
+// const electron = require('electron')
+// const app = electron.app
+// const BrowserWindow = electron.BrowserWindow
+// const ipcMain = electron.ipcMain
 import { is } from 'electron-util'
+// const is = require('electron-util').is
 
-import configFile from './configstore'
+// import configFile from './configstore'
 
+import Store from 'electron-store'
+// const Store = require('electron-store')
+
+const configFile = new Store({
+  defaults: {
+    windowBounds: {
+      main: { width: 1800, height: 800 }
+    },
+    scan_prefix: 'AAA'
+  }
+});
 const configData = configFile.store
 
 let mainWindow

@@ -9,7 +9,7 @@ const msiCreator = new MSICreator({
   name: 'bangbib',
   manufacturer: process.env['AUTHOR'],
   upgradeCode: process.env['UPGRADECODE'],
-  version: process.env['APPVEYOR_BUILD_VERSION'],
+  version: '1.0.' + process.env['GITHUB_RUN_NUMBER'],
   outputDirectory: path.resolve(__dirname, 'release/msi'),
   shortcutFolderName: 'bangbib',
   language: 1031
@@ -25,5 +25,6 @@ async function createMSI () {
 createMSI().then(() => {
   console.log('MSI erfolgreich erstellt')
 }, (e) => {
-  console.log('Fehler beim erstellen der MSI')
+  console.log(e)
+  throw 'Fehler beim erstellen der MSI'
 })
