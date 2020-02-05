@@ -26,8 +26,6 @@ jobs:
         run: npm config set python python2.7
       - name: Set node config to set msvs_version to 2017
         run: npm config set msvs_version 2017
-      - name: Work around for Windows Server 2019
-        run: set path=%path%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin
       - run: npm run build -m
       - run: npm run package-win
       - run: node create-msi.js
