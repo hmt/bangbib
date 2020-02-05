@@ -11,8 +11,6 @@ jobs:
         os: [windows-latest]
 
     steps:
-      - name: Add WIX TOOLSET topath
-        run: $env:PATH += ";$env:WIX"
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Install Node.js, NPM
@@ -22,6 +20,8 @@ jobs:
       - run: npm install
       - run: npm run build -m
       - run: npm run package-win
-      - run: node create-msi.js
+      - run:run: |
+          $env:PATH += ";$env:WIX\bin"
+          node create-msi.js
       - name: see directory
         run: ls
