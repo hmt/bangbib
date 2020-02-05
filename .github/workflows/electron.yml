@@ -11,8 +11,9 @@ jobs:
         os: [windows-latest]
 
     steps:
+      - run: echo $WIX
       - name: Add WIX TOOLSET topath
-        run: echo "::add-path::${{WIX}}"
+        run: echo "::add-path::"$WIX
         if: matrix.os == 'windows-latest'
       - name: Check out Git repository
         uses: actions/checkout@v1
