@@ -11,10 +11,12 @@ jobs:
         os: [windows-latest]
 
     steps:
+      - name: Add WIX TOOLSET topath
+        run: echo "##[add-path]$WIX"
+        if: matrix.os == 'windows-latest'
       - name: Check out Git repository
         uses: actions/checkout@v1
-
-      - name: Install Node.js, NPM and Yarn
+      - name: Install Node.js, NPM
         uses: actions/setup-node@v1
         with:
           node-version: 13
