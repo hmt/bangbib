@@ -11,10 +11,8 @@ jobs:
         os: [windows-latest]
 
     steps:
-      - run: echo $WIX
       - name: Add WIX TOOLSET topath
-        run: echo "::add-path::"$WIX
-        if: matrix.os == 'windows-latest'
+        run: $env:PATH += ";$env:WIX\bin"
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Install Node.js, NPM
