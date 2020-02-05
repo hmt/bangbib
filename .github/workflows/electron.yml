@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Add WIX TOOLSET topath
-        run: $env:PATH += ";$env:WIX\bin"
+        run: $env:PATH += ";$env:WIX"
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Install Node.js, NPM
