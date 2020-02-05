@@ -18,13 +18,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 13
-      - name: install node tools
-        run: npm install --global --production windows-build-tools@4.0.0
-      - name: install node-gyp
-        run: npm install --global node-gyp@latest
       - run: npm install
       - run: npm run build -m
       - run: npm run package-win
       - run: node create-msi.js
       - name: see directory
-        run: ls ./electron_dist
+        run: ls
