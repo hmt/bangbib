@@ -33,3 +33,7 @@ jobs:
           node create-msi.js
       - name: see directory
         run: ls ./release/msi
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: ".release/msi/*.msi"
+          token: ${{ secrets.GITHUB_TOKEN }} 
