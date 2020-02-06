@@ -34,8 +34,8 @@ jobs:
         run: ls dist
       - uses: actions/upload-artifact@v1
         with:
-          name: bangbib.exe
-          path: "./dist/bangbib.msi"
+          name: bangbib
+          path: "./dist"
       - uses: ncipollo/release-action@v1
         with:
           artifact: "./dist/bangbib.msi"
