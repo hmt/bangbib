@@ -32,4 +32,4 @@ jobs:
           }
           node create-msi.js
       - name: see directory
-        run: ls ./release
+        run: ls ./release/msi
