@@ -3,7 +3,7 @@
   "author": "hmt",
   "description": "Schulbibliothek, bang, bang, bang",
   "version": "1.0.0",
-  "main": "build/electron.js",
+  "main": "./build/electron.js",
   "private": true,
   "scripts": {
     "build": "rollup --config",
@@ -19,13 +19,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {
-    "appId": "im.hmt.bangbib",
-    "files": [
-      "./build/**/*"
-    ],
-    "directories": {
-      "output": "release"
-    }
+    "appId": "im.hmt.bangbib"
   },
   "devDependencies": {
     "electron": "^8.0.0",
