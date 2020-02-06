@@ -58,6 +58,5 @@ jobs:
           path: "./release/msi/bangbib.msi"
       - uses: ncipollo/release-action@v1
         with:
-          artifact:"./release/msi/bangbib.msi"
-          tag: "v1.0.1"
+          artifact: "./release/msi/bangbib.msi"
           token: ${{ secrets.GITHUB_TOKEN }}
