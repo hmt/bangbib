@@ -30,11 +30,6 @@ jobs:
           node-version: 13
       - name: Install Dependencies
         run: npm install
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
       - name: Build
         run: npm run build -m
       - name: Package
@@ -59,4 +54,5 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifact: "./release/msi/bangbib.msi"
+          tag: "v1.0.1"
           token: ${{ secrets.GITHUB_TOKEN }}
