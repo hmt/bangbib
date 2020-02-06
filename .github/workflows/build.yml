@@ -26,6 +26,8 @@ jobs:
           node-version: 13
       - name: Install Dependencies
         run: npm install
+      - name: Rebuild Dependencies
+        run: npx electron-rebuild better-sqlite3
       - name: Build
         run: npm run build -m
       - name: Package
