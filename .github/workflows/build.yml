@@ -35,10 +35,10 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: bangbib.exe
-          path: "./dist/bangbib.exe"
+          path: "./dist/bangbib.msi"
       - uses: ncipollo/release-action@v1
         with:
-          artifact: "./dist/bangbib.exe"
+          artifact: "./dist/bangbib.msi"
           allowUpdates: true
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.GITHUB_TOKEN }}

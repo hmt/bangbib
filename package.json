@@ -18,9 +18,17 @@
   "build": {
     "appId": "im.hmt.bangbib",
     "productName": "bangbib",
+    "artifactName": "bangbib.${ext}",
     "files": [
       "./build/**/*"
-    ]
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "msi"
+        }
+      ]
+    }
   },
   "devDependencies": {
     "electron": "^8.0.0",
