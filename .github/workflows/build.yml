@@ -31,7 +31,7 @@ jobs:
       - name: Build
         run: npm run build -m
       - name: Package
-        run: npm run package-win
+        run: npm run dist
       - name: Use WIX
         if: matrix.os == 'windows-latest'
         run: |
