@@ -9,7 +9,7 @@ const msiCreator = new MSICreator({
   name: 'bangbib',
   manufacturer: process.env['AUTHOR'],
   upgradeCode: process.env['UPGRADECODE'],
-  version: '1.0.' + process.env['GITHUB_RUN_ID'],
+  version: '1.0.' + process.env['GITHUB_RUN_NUMBER'],
   outputDirectory: path.resolve(__dirname, 'release/msi'),
   shortcutFolderName: 'bangbib',
   language: 1031
