@@ -13,13 +13,28 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: Install Node.js, NPM
         uses: actions/setup-node@v1
         with:
           node-version: 13
-      - run: npm install
-      - run: npm run build -m
-      - run: npm run package-win
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build -m
+      - name: Package
+        run: npm run package-win
       - name: Use WIX
         if: matrix.os == 'windows-latest'
         run: |
@@ -33,8 +48,12 @@ jobs:
           node create-msi.js
       - name: see directory
         run: ls ./release/msi
+      - uses: actions/upload-artifact@v1
+        with:
+          name: bangbib.msi
+          path:"./release/msi/bangbib.msi"
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: ".release/msi/*.msi"
+          artifact:"./release/msi/bangbib.msi"
           tag: "v1.0.1"
-          token: ${{ secrets.GITHUB_TOKEN }} 
+          token: ${{ secrets.GITHUB_TOKEN }}
