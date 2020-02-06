@@ -6,7 +6,7 @@ const production = process.env.NODE_ENV !== "development";
 export default [
   {
     input: [
-            "src/main.js",
+            // "src/main.js",
             "src/index.js"
            ],
     output: [
