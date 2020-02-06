@@ -17,6 +17,7 @@
   },
   "build": {
     "appId": "im.hmt.bangbib",
+    "productName": "bangbib",
     "files": [
       "./build/**/*"
     ]

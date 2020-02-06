@@ -32,27 +32,13 @@ jobs:
         run: npm run dist
       - name: show dir
         run: ls dist
-      - name: Use WIX
-        if: matrix.os == 'windows-latest'
-        run: |
-          $wixToolsetBinPath = ";C:\Program Files (x86)\WiX Toolset v3.11\bin;"
-          $env:PATH = $env:PATH + $wixToolsetBinPath
-          [Environment]::SetEnvironmentVariable("Path", $env:PATH, [EnvironmentVariableTarget]::Machine)
-          if ((Get-Command "light.exe" -ErrorAction SilentlyContinue) -eq $null)
-          {
-            Write-Host "Unable to find light.exe in your PATH"
-          }
-          node create-msi.js
-        env:
-          AUTHOR: ${{ secrets.AUTHOR }}
-          UPGRADECODE: ${{ secrets.UPGRADECODE }}
       - uses: actions/upload-artifact@v1
         with:
-          name: bangbib.msi
-          path: "./release/msi/bangbib.msi"
+          name: bangbib.exe
+          path: "./dist/bangbib.exe"
       - uses: ncipollo/release-action@v1
         with:
-          artifact: "./release/msi/bangbib.msi"
+          artifact: "./dist/bangbib.exe"
           allowUpdates: true
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.GITHUB_TOKEN }}
