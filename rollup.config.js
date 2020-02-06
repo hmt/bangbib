@@ -25,7 +25,6 @@ export default [
       }),
       externals({deps: true})
     ],
-    external: ['svelte/internal', 'svelte/store'],
     onwarn (warning, warn) {
       if (warning.code === 'CIRCULAR_DEPENDENCY') return;
       warn(warning);
