@@ -7,9 +7,9 @@ const msiCreator = new MSICreator({
   description: 'Desktop Anwendung - Schulbibliothek',
   exe: 'bangbib.exe',
   name: 'bangbib',
-  manufacturer: 'hmt',//process.env['AUTHOR'],
-  //upgradeCode: process.env['UPGRADECODE'],
-  version: '1.0.0', //process.env['APPVEYOR_BUILD_VERSION'],
+  manufacturer: process.env['AUTHOR'],
+  upgradeCode: process.env['UPGRADECODE'],
+  version: '1.0.' + process.env['GITHUB_RUN_ID'],
   outputDirectory: path.resolve(__dirname, 'release/msi'),
   shortcutFolderName: 'bangbib',
   language: 1031

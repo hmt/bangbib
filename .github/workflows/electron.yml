@@ -41,6 +41,9 @@ jobs:
             Write-Host "Unable to find light.exe in your PATH"
           }
           node create-msi.js
+        env:
+          AUTHOR: ${{ secrets.AUTHOR }}
+          UPGRADECODE: ${{ secrets.UPGRADECODE }}
       - uses: actions/upload-artifact@v1
         with:
           name: bangbib.msi
@@ -49,5 +52,5 @@ jobs:
         with:
           artifact: "./release/msi/bangbib.msi"
           allowUpdates: true
-          tag: "v1.0.2"
+          tag: v1.0.$GITHUB_RUN_ID
           token: ${{ secrets.GITHUB_TOKEN }}
