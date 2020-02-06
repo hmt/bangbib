@@ -23,6 +23,7 @@
       "./build/**/*"
     ],
     "win": {
+      "icon": "icons/win/icon.ico",
       "target": [
         {
           "target": "msi"
