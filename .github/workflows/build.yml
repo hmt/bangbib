@@ -52,5 +52,5 @@ jobs:
         with:
           artifact: "./release/msi/bangbib.msi"
           allowUpdates: true
-          tag: v1.0.$GITHUB_RUN_NUMBER
+          tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.GITHUB_TOKEN }}
