@@ -1,15 +1,11 @@
 name: Build/release
-
 on: push
-
 jobs:
   release:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [windows-latest]
-
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
@@ -45,8 +41,6 @@ jobs:
             Write-Host "Unable to find light.exe in your PATH"
           }
           node create-msi.js
-      - name: see directory
-        run: ls ./release/msi
       - uses: actions/upload-artifact@v1
         with:
           name: bangbib.msi
@@ -54,5 +48,6 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifact: "./release/msi/bangbib.msi"
+          allowUpdates: true
           tag: "v1.0.1"
           token: ${{ secrets.GITHUB_TOKEN }}
