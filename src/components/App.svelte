@@ -3,21 +3,22 @@
   import { db_check } from "./../database.js";
   import Main from "./Main.svelte";
   import Print from "./Print.svelte";
-
-  const connected = db_check();
 </script>
 
 <style>
   @import "../node_modules/bulma/css/bulma.css";
 </style>
 
-{#if connected}
+{#await db_check()} Öffne Datenbank …
+{:then connected}
   {#if $print}
     <Print />
   {:else}
     <Main />
   {/if}
-{:else}
+{:catch e}
   <br />
   bangbib konnte nicht gestartet werden. Nicht gut. Datenbank ok?
-{/if}
+  <br>Diese Fehlermeldung gab es:
+  <pre>{e}</pre>
+{/await}
