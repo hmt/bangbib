@@ -50,6 +50,7 @@
     "bulma": "^0.8.0",
     "electron-store": "^5.1.0",
     "electron-util": "^0.13.1",
+    "ley": "^0.4.0",
     "papaparse": "^5.1.1",
     "svelte": "^3.18.1"
   }
