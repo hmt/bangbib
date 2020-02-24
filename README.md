@@ -4,12 +4,14 @@ Schulen oder sonstingen Einrichtungen.
 
 ## Eigenschaften
 Bangbib bietet folgende Eigenschaften zur Verwaltung:
-* Scannerunterstützung zum Einlesen von Barcodes Buchtitel können en masse
-* importiert werden Nutzer können als Liste ebenfalls im Block importiert
-* werden Nutzer können Angaben zu Lerngruppen und Klassen mitbringen Medien
-* können an einzelne Nutzer verliehen werden Gruppenauseihe, wenn gleiche
-* Medien an mehrere Nutzer im Block verliehen werden Druckansichten für
-* Gruppenausleihe, Einzelnutzer und säumige Nutzer
+
+* Scannerunterstützung zum Einlesen von Barcodes
+* Buchtitel können en masse importiert werden
+* Nutzer können als Liste ebenfalls im Block importiert werden
+* Nutzer können Angaben zu Lerngruppen und Klassen mitbringen
+* Medien können an einzelne Nutzer verliehen werden
+* Gruppenauseihe, wenn gleiche Medien an mehrere Nutzer im Block verliehen werden
+* Druckansichten für Gruppenausleihe, Einzelnutzer und säumige Nutzer
 
 ### Hinweis zur Nutzung
 Es gibt momentan einen Installer für Windows, Mac und Linux auf Anfrage.
@@ -29,10 +31,14 @@ Gesperrte Nutzer können in der Gruppenleihe keine Bücher leihen.
 
 #### Scanner
 Der Scannerstatus wird oben im Menü angezeigt.
+
 * <- ist die Rückgabe. Ist das Feld blau, nimmt bangbib Bücher entgegen.
-* Gescannte Medien werden zurückgebucht. -> ist die Ausleihe. Ist das Feld
-* gelb, kann in der aktuellen Ansicht ein Titel verliehen werden. +1 bedeutet,
-* dass Medientitel, die nicht in der Datenbank sind, hinzugefügt werden können.
+Gescannte Medien werden zurückgebucht.
+* -> ist die Ausleihe. Ist das Feld gelb, kann in der aktuellen Ansicht ein
+Titel verliehen werden.
+* +1 bedeutet, * dass Medientitel, die nicht in der Datenbank sind, hinzugefügt
+werden können.
+
 Bangbib ist sehr pragmatisch im Umgang mit neuen Titeln. Kommt ein
 unbekannter Barcode vor, fragt Bangbib, was mit dem Barcode passieren soll.
 Entweder man ordnet den Barcode einem bekannten Titel zu oder erstellt einen
