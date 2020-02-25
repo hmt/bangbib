@@ -11,6 +11,8 @@
   const prefix_length = $configData.scan_prefix.length;
   let buffer = [],
     barcode,
+    barcode_manuell,
+    barcode_input,
     registrieren,
     lastKeyTime = Date.now(),
     medium,
@@ -21,6 +23,10 @@
     if (registrieren) {
       (event.key === 'Escape') && (registrieren = false)
       return
+    }
+    if (event.key === 'Escape') {
+      barcode_manuell = !barcode_manuell
+      barcode_input = ''
     }
     if (
       event.key === "Enter" &&
@@ -112,7 +118,26 @@
 </script>
 
 <svelte:window on:keydown={handle_keydown} />
-
+{#if barcode_manuell}
+  <div class="modal is-active">
+    <div class="modal-background" on:click={()=>barcode_manuell=false}/>
+    <button class="modal-close is-large" aria-label="close" on:click={()=>barcode_manuell=false}></button>
+    <div class="modal-content">
+      <div class="box">
+        <div class="field">
+          <label class="label">Barcode eingeben</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              bind:value={barcode}
+              on:keydown={e => {if (e.key === 'Enter') { barcode_manuell=false; scan()}}} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/if}
 {#if registrieren}
   <div class="modal is-active">
     <div class="modal-background" on:click={()=>registrieren=false}/>
