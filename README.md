@@ -49,5 +49,12 @@ bis zum Gruppenende den gleichen Titel haben.
 Eine Nutzung ohne Scanner ist momentan nicht möglich. Ein Scanner-Prefix kann
 in den Einstellungen festgelegt werden.
 
+#### Drucken
+Nach Beendigung der Gruppenausleihe wird automatisch in die Druckansicht gewechselt.
+Mit Drücken der Taste `p` wird gedruckt.
+
+In der Nutzerübersicht kann man oben im Menü auf den Drucken-Knopf drücken und die
+Druckansicht wird gezeigt.
+
 ### Lizenz
 Bangbib wird unter der MIT-Lizenz veröffentlich.
