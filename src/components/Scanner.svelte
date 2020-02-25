@@ -21,6 +21,7 @@
     medium_selected;
 
   function handle_keydown(event) {
+    if (barcode_manuell) return
     if (registrieren) {
       (event.key === 'Escape') && (registrieren = false)
       return
@@ -62,7 +63,6 @@
     if (!res) {
       try {
         zuordnung(barcode);
-        console.log(e, "Medium zugeordnet");
       } catch (e) {
         medium = $db.prepare(`SELECT * FROM medienbezeichnung`).all();
         registrieren = true
@@ -72,14 +72,12 @@
     } else if (res.ausleihe_id) {
       try {
         rueckgabe(res);
-        console.log(e, "Medium zurückgegeben");
       } catch (e) {
         if (e instanceof DontBubbleException) return
       }
     } else {
       try {
         ausleihe(res);
-        console.log(e, "Medium ausgeliehen");
       } catch (e) {
         if (e instanceof DontBubbleException) return
       }
