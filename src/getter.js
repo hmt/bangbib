@@ -16,7 +16,7 @@ import { schueler, db } from "./stores.js";
     const res = get(db)
       .prepare(
         `
-      SELECT s.*, k.kurs, k.kurs_lehrer
+      SELECT DISTINCT s.*, k.kurs, k.kurs_lehrer
       FROM kurszugehoerigkeit AS k
       LEFT JOIN schueler AS s ON (k.schild_id = s.schild_id)
       WHERE k.kurs = ? AND s.klasse = ? AND s.jahr = ?

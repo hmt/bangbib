@@ -4,7 +4,6 @@
   import * as notifier from './../notifier.js'
   import { view, schueler, db, medien, print } from './../stores.js';
   import { group_by } from './../helpers.js'
-
   function update () {
     $medien = $db.prepare(`
       SELECT a.*, x.*, m.*, a.id AS ausleihe_id

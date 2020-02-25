@@ -1,4 +1,5 @@
 <script>
+console.log('Medium')
   import { db } from "./../stores.js";
   export let medium = [];
   export let modal;

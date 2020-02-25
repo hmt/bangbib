@@ -5,7 +5,7 @@
 
   let datensatz_schueler = "",
     datensatz_medien = "",
-    datensatz_sonstige = {nichtschueler: 1},
+    datensatz_sonstige = {nichtschueler: 1, memo: ''},
     warten;
 
   const update_sonstige = () => {
@@ -37,11 +37,11 @@
     const jahr = values[0].jahr
     const schueler_values = Object.values(schueler)
       .map(
-        a => `(${a[0]}, ${a[1]}, "${a[2]}", "${a[3]}", "${a[4]}")`
+        a => `(${a[0]}, ${a[1]}, '${a[2]}', '${a[3]}', '${a[4]}')`
       )
       .join(",");
     const kurszugehoerigkeit_values = values
-      .map(v => `(${v.id}, "${v.kurs_lehrer|''}", "${v.kurs||''}")`)
+      .map(v => `(${v.id}, '${v.kurs_lehrer||''}', '${v.kurs||''}')`)
       .join(",");
     const query = [
       `DELETE FROM schueler WHERE NOT EXISTS ( SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`,

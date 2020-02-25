@@ -1,7 +1,8 @@
 <script>
   import { configData, db, scan_status } from "./../stores.js";
   import { DontBubbleException } from './../exceptions.js'
- 	import { onDestroy } from 'svelte';
+  import { onDestroy } from 'svelte';
+  import { focus } from './../helpers.js';
 	onDestroy(() => $scan_status = {})
 
   export let scaninterface
@@ -26,7 +27,6 @@
     }
     if (event.key === 'Escape') {
       barcode_manuell = !barcode_manuell
-      barcode_input = ''
     }
     if (
       event.key === "Enter" &&
@@ -58,29 +58,30 @@
     `
       )
       .get(barcode);
-    console.log(res);
+    console.log('Ergebnis Barcodesuche in DB: ', res || '– nichts gefunden –');
     if (!res) {
       try {
         zuordnung(barcode);
+        console.log(e, "Medium zugeordnet");
       } catch (e) {
         medium = $db.prepare(`SELECT * FROM medienbezeichnung`).all();
         registrieren = true
-        console.log(e, "Zuordnung ist hier nicht möglich, Medium registrieren");
+        console.log(e, "Barcode unbekannt; Medium registrieren");
         return
       }
     } else if (res.ausleihe_id) {
       try {
         rueckgabe(res);
+        console.log(e, "Medium zurückgegeben");
       } catch (e) {
         if (e instanceof DontBubbleException) return
-        console.log(e, "Rückgabe ist hier nicht möglich");
       }
     } else {
       try {
         ausleihe(res);
+        console.log(e, "Medium ausgeliehen");
       } catch (e) {
         if (e instanceof DontBubbleException) return
-        console.log("Ausleihe ist hier nicht möglich");
       }
     }
     try {
@@ -131,6 +132,7 @@
               class="input"
               type="text"
               bind:value={barcode}
+              use:focus
               on:keydown={e => {if (e.key === 'Enter') { barcode_manuell=false; scan()}}} />
           </div>
         </div>

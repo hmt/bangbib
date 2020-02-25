@@ -1,6 +1,6 @@
 <script>
   import Scanner from "./Scanner.svelte";
-  import Medium from "./Medien.svelte";
+  import Medium from "./Medium.svelte";
   import Schueler from "./Schueler.svelte";
   import { view, db, print, medien } from "./../stores.js";
   import { group_by } from "./../helpers.js";
@@ -55,7 +55,7 @@
   }
   let selected,
     suche = "",
-    modal = false,
+    modal,
     neuer_titel = "",
     add = false;
 
@@ -79,7 +79,6 @@
   };
   const focus = node => node.focus();
   update();
-
   $: medien_filter = group_by(
     $medien.filter(
       m =>
@@ -136,8 +135,8 @@
           {#each Object.entries(medien_filter) as [n, m], i}
             <tr
               class="pointer"
-              on:mouseover={() => (selected = n)}
-              on:click={() => (modal = true)}>
+              on:click={_=> modal = true}
+              on:mouseover={() => (selected = n)}>
               <td>{m[0].medien_id}</td>
               <td>{m[0].medien_name}</td>
               <td>

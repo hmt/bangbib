@@ -46,7 +46,7 @@
   const key = e => {
     if (e.key === "ArrowDown") selected += 1;
     else if (e.key === "ArrowUp") selected -= 1;
-    else if (e.key === "Enter") {
+    else if (e.key === "Enter" && selected >= 0) {
       show_selected(res[selected]);
       return;
     } else return;
