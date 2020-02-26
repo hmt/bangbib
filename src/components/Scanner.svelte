@@ -22,13 +22,16 @@
 
   function handle_keydown(event) {
     if (barcode_manuell) return
+    if (event.key === 'Escape') {
+      barcode_manuell = !barcode_manuell
+    }
     if (registrieren) {
       (event.key === 'Escape') && (registrieren = false)
       return
     }
-    if (event.key === 'Escape') {
-      barcode_manuell = !barcode_manuell
-    }
+    const currentTime = Date.now();
+    if (currentTime - lastKeyTime > 1000) buffer = [];
+    if (event.key === 'Enter' && !buffer.length) return
     if (
       event.key === "Enter" &&
       buffer.slice(0, prefix_length).join("") === $configData.scan_prefix
@@ -40,8 +43,6 @@
       const charList = "abcdefghijklmnopqrstuvwxyz0123456789";
       const key = event.key.toLowerCase();
       if (charList.indexOf(key) === -1) return;
-      const currentTime = Date.now();
-      if (currentTime - lastKeyTime > 1000) buffer = [];
       buffer.push(event.key);
       lastKeyTime = currentTime;
     }
