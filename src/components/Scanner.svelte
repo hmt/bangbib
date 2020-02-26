@@ -21,10 +21,10 @@
     medium_selected;
 
   function handle_keydown(event) {
-    if (barcode_manuell) return
     if (event.key === 'Escape') {
       barcode_manuell = !barcode_manuell
     }
+    if (barcode_manuell) return
     if (registrieren) {
       (event.key === 'Escape') && (registrieren = false)
       return
