@@ -11,7 +11,7 @@ export default [
            ],
     output: [
       {
-        sourcemap: true,
+        sourcemap: !production,
         dir: "build",
         format: "cjs",
       }
