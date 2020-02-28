@@ -15,22 +15,6 @@
     "dev:electron": "electron .",
     "postinstall": "electron-builder install-app-deps"
   },
-  "build": {
-    "appId": "im.hmt.bangbib",
-    "productName": "bangbib",
-    "artifactName": "bangbib.${ext}",
-    "files": [
-      "./build/**/*"
-    ],
-    "win": {
-      "icon": "icons/win/icon.ico",
-      "target": [
-        {
-          "target": "msi"
-        }
-      ]
-    }
-  },
   "devDependencies": {
     "electron": "^8.0.2",
     "electron-builder": "^22.3.2",

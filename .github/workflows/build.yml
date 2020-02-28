@@ -1,26 +1,30 @@
 name: Build and release bangbib
-on: push
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '*.*.*'
 jobs:
   release:
     runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
+      - name: Get npm cache directory
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v1
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-node-
       - name: Install Node.js, NPM
         uses: actions/setup-node@v1
         with:
@@ -28,18 +32,17 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build
+        env:
+          THE_AUTHOR: ${{ secrets.AUTHOR }}
+          THE_EMAIL: ${{ secrets.EMAIL }}
         run: npm run build -m
       - name: Package
         run: npm run dist
       - name: show dir
         run: ls dist
-      - uses: actions/upload-artifact@v1
-        with:
-          name: bangbib
-          path: "./dist"
       - uses: ncipollo/release-action@v1
         with:
-          artifact: "./dist/bangbib.msi"
+          artifacts: "./dist/bangbib.msi,./dist/bangbib.dmg,./dist/bangbib.AppImage,./dist/bangbib.snap"
           allowUpdates: true
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.GITHUB_TOKEN }}
