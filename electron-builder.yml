@@ -12,6 +12,12 @@ extraMetadata:
 files:
   - ./build/**/*
 
+extraResources:
+- from: "./src/migrations/"
+  to: migrations
+  filter:
+  - "**/*"
+
 win:
   icon: icons/icon.ico
   target: msi
@@ -22,7 +28,9 @@ linux:
   executableName: bangbib
   target:
     - AppImage
+    - rpm
     - snap
+    - deb
 
 mac:
   icon: icons/icon.icns

@@ -3,12 +3,13 @@ import { ipcRenderer } from "electron";
 import { db } from "./stores.js";
 import { join } from "path";
 import { get } from "svelte/store";
+import ley from 'ley'
+
 const Database = require("better-sqlite3");
-const ley = require("ley");
 
 const userData = api.app.getPath("userData");
 const db_file = join(userData, "datenbank.sqlite");
-const ley_opts = { config: { database: db_file }, dir: "src/migrations" };
+const ley_opts = { config: { database: db_file }, cwd: process.resourcesPath, dir: "migrations" };
 
 export async function db_check() {
   try {
@@ -36,4 +37,5 @@ export async function db_check() {
       console.log("schließe Datenbank…");
     } catch (e) { console.log('Datenbank konnte nicht geschlossen werden: ',e)}
   });
+  console.log(db)
 }
