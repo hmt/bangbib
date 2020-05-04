@@ -16,25 +16,25 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "devDependencies": {
-    "electron": "^8.2.3",
-    "electron-builder": "^22.5.1",
+    "electron": "^8.2.5",
+    "electron-builder": "^22.6.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
-    "prettier-plugin-svelte": "^0.7.0",
-    "rollup": "^2.7.2",
+    "prettier-plugin-svelte": "^1.0.0",
+    "rollup": "^2.7.6",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-externals": "^2.1.5",
+    "rollup-plugin-node-externals": "^2.1.6",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.2.1"
   },
   "dependencies": {
-    "better-sqlite3": "^6.0.1",
+    "better-sqlite3": "^7.0.1",
     "bulma": "^0.8.2",
     "electron-store": "^5.1.1",
     "electron-util": "^0.14.1",
     "ley": "^0.5.0",
     "papaparse": "^5.2.0",
-    "svelte": "^3.21.0"
+    "svelte": "^3.22.1"
   }
 }
