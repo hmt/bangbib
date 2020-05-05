@@ -4,6 +4,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { is } from 'electron-util'
 import Store from 'electron-store'
 
+app.allowRendererProcessReuse = true
 const configFile = new Store({
   defaults: {
     windowBounds: {

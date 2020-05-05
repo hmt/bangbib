@@ -9,7 +9,12 @@ const Database = require("better-sqlite3");
 
 const userData = api.app.getPath("userData");
 const db_file = join(userData, "datenbank.sqlite");
-const ley_opts = { config: { database: db_file }, cwd: process.resourcesPath, dir: "migrations" };
+const cwd = isDev() ? join(__dirname, '..', 'src') : process.resourcesPath
+const ley_opts = { config: { database: db_file }, cwd, dir: "migrations" };
+
+function isDev() {
+  return process.env.ELECTRON_DEV === '1';
+}
 
 export async function db_check() {
   try {
