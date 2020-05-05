@@ -12,7 +12,7 @@
     "dist": "npm run build && electron-builder -l",
     "start:electron": "electron .",
     "dev:development": "rollup --config --watch",
-    "dev:electron": "electron .",
+    "dev:electron": "ELECTRON_DEV=1 electron .",
     "postinstall": "electron-builder install-app-deps"
   },
   "devDependencies": {
@@ -35,6 +35,6 @@
     "electron-util": "^0.14.1",
     "ley": "^0.5.0",
     "papaparse": "^5.2.0",
-    "svelte": "^3.22.1"
+    "svelte": "^3.22.2"
   }
 }

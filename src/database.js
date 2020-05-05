@@ -42,5 +42,4 @@ export async function db_check() {
       console.log("schließe Datenbank…");
     } catch (e) { console.log('Datenbank konnte nicht geschlossen werden: ',e)}
   });
-  console.log(db)
 }
