@@ -9,7 +9,7 @@
     "build": "rollup --config",
     "start": "npm run build && run-s start:*",
     "dev": "rollup -c && run-p dev:*",
-    "dist": "npm run build && electron-builder -l",
+    "dist": "npm run build && electron-builder",
     "start:electron": "electron .",
     "dev:development": "rollup --config --watch",
     "dev:electron": "ELECTRON_DEV=1 electron .",
