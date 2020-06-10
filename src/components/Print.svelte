@@ -24,5 +24,18 @@
 <svelte:window on:keydown={handle_keydown} />
 
 {#if c}
+    <article class="message is-default" style="position: absolute; top: 2rem; left: 65rem">
+    <div class="message-header">
+      <span class="icon">
+        <i class="mdi">info</i>
+      </span>
+      &nbsp;Tastaturbefehle
+    </div>
+    <div class="message-body">
+      Drucken: <b>p</b>
+      <br>
+      Abbrechen: <b>ESC</b>
+    </div>
+  </article>
   <svelte:component this={c} />
 {/if}

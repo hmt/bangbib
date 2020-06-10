@@ -10,7 +10,7 @@
 </style>
 
 {#await db_check()} Öffne Datenbank …
-{:then connected}
+{:then}
   {#if $print}
     <Print />
   {:else}
