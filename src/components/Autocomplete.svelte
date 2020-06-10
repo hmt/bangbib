@@ -113,7 +113,7 @@
   <input
     class="input"
     type="text"
-    placeholder="suchen ..."
+    placeholder="suche in Gruppen und Nutzern ..."
     bind:this={input}
     bind:value={term}
     on:keydown={key}

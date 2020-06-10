@@ -50,6 +50,19 @@
     active = 3;
     return group_by(res, "klasse");
   }
+  function sonstige_nutzer() {
+    const res = $db
+      .prepare(
+        `
+      SELECT s.name, s.vorname, s.memo, s.id, s.klasse
+      FROM schueler AS s
+      WHERE s.nichtschueler = 1;
+    `
+      )
+      .all();
+    active = 4;
+    return group_by(res, "nichtschueler");
+  }
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
@@ -74,18 +87,26 @@
         <span>Gesperrte Nutzer</span>
       </a>
     </li>
+    <li
+      class:is-active={active === 4}
+      on:click={_ => (klasse = sonstige_nutzer())}>
+      <a>
+        <span>Sonstige Nutzer</span>
+      </a>
+    </li>
   </ul>
 </div>
 {#if klasse}
   <div class="box">
     {#each Object.entries(klasse) as [k, schueler]}
-      <h2 class="title">{k}</h2>
+      <h2 class="title">{k && k != "null" && k != "undefined" ? k : "Sonstige"}</h2>
       <table class="table">
         <thead>
           <tr>
             <th />
             <th>Name</th>
             <th>Vorame</th>
+            <th>Bemerkung</th>
           </tr>
         </thead>
         <tbody>
@@ -99,6 +120,7 @@
               <td>{i + 1}</td>
               <td>{s.name}</td>
               <td>{s.vorname}</td>
+              <td>{s.memo}</td>
             </tr>
           {/each}
         </tbody>
