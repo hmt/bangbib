@@ -4,7 +4,6 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { is } from 'electron-util'
 import Store from 'electron-store'
 
-app.allowRendererProcessReuse = true
 const configFile = new Store({
   defaults: {
     windowBounds: {
@@ -24,7 +23,7 @@ function createWindow() {
     useContentSize: true,
     defaultEncoding: 'utf-8',
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: true
     },
     title: `${app.name}`
     // icon: join(__dirname, '../icons/icon.icns')
@@ -38,7 +37,7 @@ function createWindow() {
     }))
   if (is.development || process.argv.some(a => a === '--devtools')) mainWindow.openDevTools()
 
-  mainWindow.on('close', async e => {
+  mainWindow.on('close', e => {
     if (!configData.close) {
       e.preventDefault()
       configFile.set('windowBounds.main', mainWindow.getBounds())
@@ -48,9 +47,6 @@ function createWindow() {
       mainWindow.close()
     }
   })
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
   mainWindow.once('ready-to-show', async () => {
     mainWindow.show()
   })
@@ -58,7 +54,7 @@ function createWindow() {
 
 app.on('ready', createWindow)
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+  app.quit()
 })
 app.on('activate', function () {
   if (mainWindow === null) createWindow()

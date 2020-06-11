@@ -29,12 +29,12 @@
     "rollup-plugin-svelte": "^5.2.2"
   },
   "dependencies": {
-    "better-sqlite3": "^7.0.1",
+    "better-sqlite3": "^7.1.0",
     "bulma": "^0.9.0",
     "electron-store": "^5.2.0",
     "electron-util": "^0.14.1",
     "ley": "^0.5.0",
     "papaparse": "^5.2.0",
-    "svelte": "^3.23.1"
+    "svelte": "^3.23.2"
   }
 }
