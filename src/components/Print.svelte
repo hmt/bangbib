@@ -24,7 +24,7 @@
 <svelte:window on:keydown={handle_keydown} />
 
 {#if c}
-    <article class="message is-default" style="position: absolute; top: 2rem; left: 65rem">
+  <article class="message is-default no-print" style="position: absolute; top: 2rem; left: 65rem">
     <div class="message-header">
       <span class="icon">
         <i class="mdi">info</i>
