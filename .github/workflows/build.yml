@@ -44,7 +44,7 @@ jobs:
         run: ls dist
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "./dist/bangbib.msi,./dist/bangbib.dmg,./dist/bangbib.AppImage,./dist/bangbib.snap"
+          artifacts: "./dist/bangbib.msi,./dist/bangbib.dmg,./dist/bangbib.AppImage,./dist/bangbib.snap,./dist/bangbib.rpm,./dist/bangbib.deb"
           allowUpdates: true
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.GITHUB_TOKEN }}
