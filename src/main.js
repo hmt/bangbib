@@ -25,8 +25,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true
     },
-    title: `${app.name}`
-    // icon: join(__dirname, '../icons/icon.icns')
+    title: `${app.name}`,
+    icon: join(__dirname, '../icons/icon.png')
   })
   mainWindow.removeMenu()
   mainWindow.loadURL(
