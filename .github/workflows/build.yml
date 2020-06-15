@@ -2,7 +2,7 @@ name: Build and release bangbib
 on:
   push:
     branches:
-      - '**'
+      - 'master'
     tags-ignore:
       - '*.*.*'
 jobs:
