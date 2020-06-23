@@ -78,14 +78,14 @@
 <h2 class="sub-title">{s.klasse || 'Sonstiger Nutzer'}</h2>
 <div class="field">
   {#if yes}
-    <button class="button is-danger" on:click={()=>remove_schueler()}>Schüler aus Datenbank löschen</button>
+    <button class="button is-danger" on:click={()=>remove_schueler()}>Nutzer aus Datenbank löschen</button>
   {:else}
     <label class="checkbox is-danger">
-    <input type="checkbox" bind:checked={yes}> Löschen aktivieren. Der Schüler und alle Leihgaben können aus der Datenbank gelöscht werden.</label>
+    <input type="checkbox" bind:checked={yes}> Löschen aktivieren. Der Nutzer und alle Leihgaben können aus der Datenbank gelöscht werden.</label>
   {/if}
 </div>
 <div class="field">
-  <button class="button" class:is-warning={s.gesperrt} class:is-success={!s.gesperrt} on:click={()=>suspend_schueler()}>Schüler {s.gesperrt ? 'ent':''}sperren</button>
+  <button class="button" class:is-warning={s.gesperrt} class:is-success={!s.gesperrt} on:click={()=>suspend_schueler()}>Nutzer {s.gesperrt ? 'ent':''}sperren</button>
 </div>
 <div class="field">
   <label class="label">Memo</label>

@@ -56,7 +56,8 @@
     try {
       query.forEach((q) => $db.prepare(q).run());
       datensatz_schueler = "";
-      notifier.fertig("Schüler importiert");
+      const res = $db.prepare(`SELECT COUNT(*) as anzahl FROM schueler`).get()
+      notifier.fertig(`${schueler_values.length || 0} Datensätze verarbeitet; ${res.anzahl} Nutzer in der Datenbank.`);
     } catch (e) {
       notifier.fehler("Fehler beim Schülerimport:", e.message);
       console.log(e);
