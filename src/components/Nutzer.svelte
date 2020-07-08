@@ -98,13 +98,13 @@
   <ul>
     <li class:is-active={active === 5} on:click={_ => (klasse = schueler())}>
       <a>
-        <span class="tag is-primary">{zahlen.sch}</span>
+        <span class="tag is-primary">{zahlen.sch || 0}</span>
         &nbsp;<span>Schüler nach Gruppe</span>
       </a>
     </li>
     <li class:is-active={active === 1} on:click={_ => (klasse = ausleiher())}>
       <a>
-        <span class="tag is-primary">{zahlen_a.a}</span>
+        <span class="tag is-primary">{zahlen_a.a || 0}</span>
         &nbsp;<span>Nutzer mit Ausleihe</span>
       </a>
     </li>
@@ -112,7 +112,7 @@
       class:is-active={active === 2}
       on:click={_ => (klasse = ausleiher_vorjahr())}>
       <a>
-        <span class="tag is-{zahlen_a.s < 1 ? 'primary':'danger'}">{zahlen_a.s}</span>
+        <span class="tag is-{zahlen_a.s < 1 ? 'primary':'danger'}">{zahlen_a.s || 0}</span>
         &nbsp;<span>Nutzer mit Ausleihe aus Vorjahren</span>
       </a>
     </li>
@@ -120,7 +120,7 @@
       class:is-active={active === 3}
       on:click={_ => (klasse = nutzer_gesperrt())}>
       <a>
-        <span class="tag is-{zahlen_a.g < 1 ? 'primary':'danger'}">{zahlen.g}</span>
+        <span class="tag is-{zahlen_a.g < 1 ? 'primary':'danger'}">{zahlen.g || 0}</span>
         &nbsp;<span>Gesperrte Nutzer</span>
       </a>
     </li>
@@ -128,7 +128,7 @@
       class:is-active={active === 4}
       on:click={_ => (klasse = sonstige_nutzer())}>
       <a>
-        <span class="tag is-primary">{zahlen.s}</span>
+        <span class="tag is-primary">{zahlen.s || 0}</span>
         &nbsp;<span>Sonstige Nutzer</span>
       </a>
     </li>
