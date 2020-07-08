@@ -98,7 +98,7 @@
       INSERT INTO medienbezeichnung (name) VALUES (?)
     `
       )
-      .run(neuer_titel);
+      .run(neuer_titel.trim());
       neuer_titel = ''
       zuordnen(res.lastInsertRowid)
   }
@@ -148,34 +148,43 @@
         Was machen wir mit dem Barcode?
         <pre>{barcode}</pre>
         <hr />
-        <label class="label">Das gehört zu</label>
+        {#if medium.length}
+          <label class="label">Das gehört zu</label>
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <div class="select is-fullwidth">
+                <select bind:value={medium_selected}>
+                  <option>– nichts ausgewählt –</option>
+                  {#each medium as m}
+                    <option value={m.id}>{m.name}</option>
+                  {/each}
+                </select>
+              </div>
+            </div>
+            <div class="control">
+              <button
+                class="button is-primary"
+                on:click={() => zuordnen(medium_selected)}>
+                Titel verwenden
+              </button>
+            </div>
+          </div>
+        {/if}
+        <label class="label">Neu anlegen unter</label>
         <div class="field has-addons">
           <div class="control is-expanded">
-            <div class="select is-fullwidth">
-              <select bind:value={medium_selected}>
-                <option>– nichts ausgewählt –</option>
-                {#each medium as m}
-                  <option value={m.id}>{m.name}</option>
-                {/each}
-              </select>
-            </div>
+            <input
+              class="input is-fullwidth"
+              type="text"
+              bind:value={neuer_titel}
+              on:keydown={e => e.key === 'Enter' && neu_anlegen()} />
           </div>
           <div class="control">
             <button
               class="button is-primary"
               on:click={() => zuordnen(medium_selected)}>
-              Titel verwenden
+              Titel anlegen
             </button>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Neu anlegen unter</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              bind:value={neuer_titel}
-              on:keydown={e => e.key === 'Enter' && neu_anlegen()} />
           </div>
         </div>
       </div>

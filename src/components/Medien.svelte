@@ -66,7 +66,7 @@
       INSERT INTO medienbezeichnung (name) VALUES (?)
     `
       )
-      .run(neuer_titel);
+      .run(neuer_titel.trim());
     neuer_titel = "";
     add = false;
     update();
