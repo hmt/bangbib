@@ -1,5 +1,5 @@
 <script>
-  import { schueler, medien, titel, print } from "./../stores.js";
+  import { schueler, medien, titel, print, configData } from "./../stores.js";
   import { ipcRenderer } from 'electron'
   import PrintKurs from './Print/Kurs.svelte'
   import PrintSchueler from './Print/Schueler.svelte'
@@ -7,13 +7,22 @@
 
   let c
 
-  ipcRenderer.on('asynchronous-reply', (event, arg) => {
+  ipcRenderer.on('pdf-reply', (event, arg) => {
+    console.log('PDF: ', arg)
+  })
+  ipcRenderer.on('print-reply', (event, arg) => {
     console.log('Print: ', arg)
   })
 
   function handle_keydown(event) {
     if (event.key === "Escape") $print = false;
     if (event.key === 'p') ipcRenderer.send('print', 'print')
+    if (event.key === 's') ipcRenderer.send('pdf', "test_case.pdf")
+  }
+
+  async function loader (file) {
+    const component = import(`./Print/${file}.svelte`)
+    return component
   }
 
   $: if ($print.name === 'Schueler') c = PrintSchueler

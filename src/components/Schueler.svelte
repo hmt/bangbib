@@ -88,13 +88,15 @@
   <button class="button" class:is-warning={s.gesperrt} class:is-success={!s.gesperrt} on:click={()=>suspend_schueler()}>Nutzer {s.gesperrt ? 'ent':''}sperren</button>
 </div>
 <div class="field">
-  <label class="label">Memo</label>
   <div class="control">
-    <input
+  <label class="label">
+    Memo
+      <input
       class="input"
       type="text"
       bind:value={s.memo}
       on:keydown={e => e.key === 'Enter' && edit_memo()} />
+    </label>
   </div>
 </div>
 

@@ -43,13 +43,15 @@ console.log('Medium')
   <div class="modal-content">
     <div class="box">
       <div class="field">
-        <label class="label">Medien-Titel</label>
         <div class="control">
-          <input
+        <label class="label">
+          Medien-Titel
+            <input
             class="input"
             type="text"
             bind:value={medium[0].medien_name}
             on:keydown={e => e.key === 'Enter' && edit()} />
+          </label>
         </div>
       </div>
       {#if yes}

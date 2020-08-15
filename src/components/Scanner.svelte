@@ -21,15 +21,15 @@
     medium_selected;
 
   function handle_keydown(event) {
+    if (registrieren) {
+      (event.key === 'Escape') && (registrieren = false)
+      return
+    }
     if (event.key === 'Escape') {
       barcode = ''
       barcode_manuell = !barcode_manuell
     }
     if (barcode_manuell) return
-    if (registrieren) {
-      (event.key === 'Escape') && (registrieren = false)
-      return
-    }
     const currentTime = Date.now();
     if (currentTime - lastKeyTime > 1000) buffer = [];
     if (event.key === 'Enter' && !buffer.length) return
@@ -126,14 +126,16 @@
     <div class="modal-content">
       <div class="box">
         <div class="field">
-          <label class="label">Barcode eingeben</label>
           <div class="control">
+          <label class="label">
+            Barcode eingeben
             <input
-              class="input"
-              type="text"
-              bind:value={barcode}
-              use:focus
-              on:keydown={e => {if (e.key === 'Enter') { barcode_manuell=false; scan()}}} />
+            class="input"
+            type="text"
+            bind:value={barcode}
+            use:focus
+            on:keydown={e => {if (e.key === 'Enter') { barcode_manuell=false; scan()}}} />
+          </label>
           </div>
         </div>
       </div>
@@ -150,11 +152,11 @@
         <pre>{barcode}</pre>
         <hr />
         {#if medium.length}
-          <label class="label">Das gehört zu</label>
+          <label class="label" for="auswahl">Das gehört zu</label>
           <div class="field has-addons">
             <div class="control is-expanded">
               <div class="select is-fullwidth">
-                <select bind:value={medium_selected}>
+                <select bind:value={medium_selected} id="auswahl">
                   <option>– nichts ausgewählt –</option>
                   {#each medium as m}
                     <option value={m.id}>{m.name}</option>
@@ -171,10 +173,11 @@
             </div>
           </div>
         {/if}
-        <label class="label">Neu anlegen unter</label>
+        <label class="label" for="neuwahl">Neu anlegen unter</label>
         <div class="field has-addons">
           <div class="control is-expanded">
             <input
+              id="neuwahl"
               class="input is-fullwidth"
               type="text"
               bind:value={neuer_titel}

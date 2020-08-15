@@ -110,14 +110,16 @@
     </button>
     {#if add}
       <div class="field">
-        <label class="label">Medien-Titel</label>
         <div class="control">
+        <label class="label">
+          Medien-Titel
           <input
-            class="input"
-            type="text"
-            bind:value={neuer_titel}
-            use:focus
-            on:keydown={e => e.key === 'Enter' && add_medienbezeichnung()} />
+          class="input"
+          type="text"
+          bind:value={neuer_titel}
+          use:focus
+          on:keydown={e => e.key === 'Enter' && add_medienbezeichnung()} />
+        </label>
         </div>
       </div>
     {/if}

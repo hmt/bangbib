@@ -88,29 +88,29 @@
 <div class="box">
   <h3 class="title">Scan-Prefix</h3>
   <div class="field">
+    <div class="control">
     <label class="label">
       Scan-Prefix muss im Scanner einprogrammiert werden
-    </label>
-    <div class="control">
       <input class="input" type="text" bind:value={$configData.scan_prefix} />
+    </label>
     </div>
   </div>
 </div>
 <div class="box">
   <h3 class="title">Schüler, Kurse und Zugehörigkeiten importieren</h3>
   <div class="field">
+    <div class="control">
     <label class="label">
       Achtung, die Nutzerdatenbank wird komplett geleert und mit den neuen Daten
       ersetzt. Ausgenommen sind säumige Nutzer und sonstige Nutzer.
-    </label>
-    <div class="control">
       <textarea
-        class="textarea"
-        bind:value={datensatz_schueler}
-        placeholder="Füge Daten mit Kopfzeile ein:
-        id|name|vorname|jahr|klasse|kurs|kurs_lehrer"
-        rows="10"
-        cols="20" />
+      class="textarea"
+      bind:value={datensatz_schueler}
+      placeholder="Füge Daten mit Kopfzeile ein:
+      id|name|vorname|jahr|klasse|kurs|kurs_lehrer"
+      rows="10"
+      cols="20" />
+    </label>
     </div>
   </div>
   <div class="field is-grouped">
@@ -163,14 +163,16 @@
 <div class="box">
   <h3 class="title">Medien importieren</h3>
   <div class="field">
-    <label class="label">Medientitel importieren</label>
     <div class="control">
+    <label class="label">
+      Medientitel importieren
       <textarea
-        class="textarea"
-        bind:value={datensatz_medien}
-        placeholder="Je ein Titel pro Zeile"
-        rows="10"
-        cols="20" />
+      class="textarea"
+      bind:value={datensatz_medien}
+      placeholder="Je ein Titel pro Zeile"
+      rows="10"
+      cols="20" />
+    </label>
     </div>
   </div>
   <div class="field is-grouped">
@@ -179,5 +181,33 @@
         Aktualisieren
       </button>
     </div>
+  </div>
+</div>
+
+<div class="box">
+  <h3 class="title">Druckeinstellungen</h3>
+  <p class="mb-4">Ein Drucker muss als Standarddrucker eingestellt sein, damit der Druck aus Bangbib heraus funktioniert.
+  <br>Darüber hinaus lässt sich festlegen, wie nach einer Gruppenausleihe verfahren wird.</p>
+  <div class="field">
+    <label class="checkbox">
+      <input type="checkbox" bind:checked={$configData.gruppe_print_dialog}>
+      Druckdialog sofort zeigen
+    </label>
+  </div>
+  <div class="field">
+    <label class="checkbox">
+      <input type="checkbox" bind:checked={$configData.gruppe_auto_pdf}>
+      Automatisch als PDF ablegen
+    </label>
+    <p class="help">Diese Einstellung erstellt ein PDF in der Form <code>Jahrgang_Kurs_Datum_Zeit.pdf</code> im lokalen Dokumentenordner</p>
+  </div>
+  <div class="field">
+    <p class="control">
+      <label class="label">PDF-Verzeichnis
+        <input class="input"
+                type="text"
+                bind:value={$configData.pdf_verzeichnis}>
+      </label>
+    </p>
   </div>
 </div>

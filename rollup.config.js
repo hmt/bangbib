@@ -23,7 +23,7 @@ export default [
           css.write("build/bundle.css");
         },
         onwarn: (warning, handler) => {
-          if (warning.code === 'a11y-label-has-associated-control') return;
+          // if (warning.code === 'a11y-label-has-associated-control') return;
           handler(warning);
         }
       }),
