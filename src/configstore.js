@@ -5,7 +5,7 @@ const configFile = new Store({
     windowBounds: {
       main: { width: 1800, height: 800 }
     },
-    scan_prefix: 'AAA'
+    scan_prefix: ''
   }
 });
 export default configFile
