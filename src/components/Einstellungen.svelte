@@ -199,7 +199,7 @@
       <input type="checkbox" bind:checked={$configData.gruppe_auto_pdf}>
       Automatisch als PDF ablegen
     </label>
-    <p class="help">Diese Einstellung erstellt ein PDF in der Form <code>Jahrgang_Kurs_Datum_Zeit.pdf</code> im lokalen Dokumentenordner</p>
+    <p class="help">Diese Einstellung erstellt ein PDF in der Form <code>Jahrgang_Kurs_Datum_Zeit.pdf</code> im PDF-Verzeichnis</p>
   </div>
   <div class="field">
     <p class="control">

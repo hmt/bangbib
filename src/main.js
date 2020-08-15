@@ -4,6 +4,10 @@ import { is } from 'electron-util'
 import { join, dirname } from "path";
 import { writeFile, existsSync, mkdirSync } from "fs";
 import configData from './configstore'
+import { VERSION } from './version'
+
+console.log(VERSION)
+if (process.argv.some(a => a === '-v')) app.exit()
 
 let mainWindow
 
@@ -20,7 +24,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true
     },
-    title: `${app.name}`
+    title: `${app.name} ${VERSION['buildVersion']}`
     // icon: join(__dirname, '../icons/icon.png')
   })
   mainWindow.removeMenu()
