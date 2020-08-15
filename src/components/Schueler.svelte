@@ -105,6 +105,7 @@
         <th></th>
         <th>Titel</th>
         <th>Barcode</th>
+        <th>Jahr</th>
         <th>Rückgabe</th>
       </tr>
     </thead>
@@ -114,6 +115,7 @@
           <td>{i+1}</td>
           <td>{m.name}</td>
           <td>{m.barcode}</td>
+          <td>{m.jahr}</td>
           <td align="center">
             <span class="icon has-text-danger pointer">
               <i
