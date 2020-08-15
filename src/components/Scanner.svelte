@@ -22,6 +22,7 @@
 
   function handle_keydown(event) {
     if (event.key === 'Escape') {
+      barcode = ''
       barcode_manuell = !barcode_manuell
     }
     if (barcode_manuell) return
