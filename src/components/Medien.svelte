@@ -3,7 +3,7 @@
   import Medium from "./Medium.svelte";
   import Schueler from "./Schueler.svelte";
   import { view, db, print, medien } from "./../stores.js";
-  import { group_by } from "./../helpers.js";
+  import { group_by, focus } from "./../helpers.js";
   import * as notifier from "./../notifier.js";
   import { get_schueler } from "./../getter.js";
 
@@ -77,7 +77,6 @@
       $view = Schueler;
     }
   };
-  const focus = node => node.focus();
   update();
   $: medien_filter = group_by(
     $medien.filter(
