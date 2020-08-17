@@ -10,7 +10,7 @@
     const res = $db
       .prepare(
         `
-      SELECT DISTINCT s.name, s.vorname, s.klasse, s.id
+      SELECT s.name, s.vorname, s.klasse, s.id, m.name as titel
       FROM ausleihe AS a
       LEFT JOIN medienexemplar AS x ON (x.id = a.medienexemplar_id)
       LEFT JOIN medienbezeichnung AS m ON (m.id = x.medienbezeichnung_id)
@@ -143,7 +143,8 @@
           <tr>
             <th />
             <th>Name</th>
-            <th>Vorame</th>
+            <th>Vorname</th>
+            <th>Bemerkung</th>
             <th>Bemerkung</th>
           </tr>
         </thead>
@@ -159,6 +160,7 @@
               <td>{s.name}</td>
               <td>{s.vorname}</td>
               <td>{s.memo || "–"}</td>
+              <td>{s.titel || "–"}</td>
             </tr>
           {/each}
         </tbody>
