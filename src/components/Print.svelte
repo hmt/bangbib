@@ -7,11 +7,6 @@
   import * as notifier from './../notifier.js'
 
   let c
-  const pdf_name = _ => {
-    const d = new Date().getTime()
-    return `${$schueler[0].klasse}_${$schueler[0].kurs}_${$schueler[0].jahr}_${d}.pdf`
-  }
-
   ipcRenderer.on('pdf-reply', (event, arg) => {
     console.log('PDF: ', arg)
     notifier.fertig('PDF erfolgreich gespeichert')
@@ -26,12 +21,6 @@
     if (event.key === 's') ipcRenderer.send('pdf', pdf_name())
   }
 
-  function run_settings (node) {
-    if (c != PrintKurs) return
-    $configData.gruppe_print_dialog && ipcRenderer.send('print')
-    $configData.gruppe_auto_pdf && ipcRenderer.send('pdf', pdf_name())
-  }
-
   $: if ($print.name === 'Schueler') c = PrintSchueler
      else if ($print.name === 'Kurs') c = PrintKurs;
      else if ($print.name === 'Medien') c = PrintMedien;
@@ -40,7 +29,7 @@
 <svelte:window on:keydown={handle_keydown} />
 
 {#if c}
-  <article class="message is-default no-print" style="position: absolute; top: 2rem; left: 65rem" use:run_settings>
+  <article class="message is-default no-print" style="position: absolute; top: 2rem; left: 65rem">
     <div class="message-header">
       <span class="icon">
         <i class="mdi">info</i>

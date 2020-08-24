@@ -1,6 +1,19 @@
 <script>
-  import { schueler, medien, titel } from "./../../stores.js";
+  import { ipcRenderer } from 'electron'
+  import { onMount } from 'svelte';
+  import { schueler, medien, titel, configData } from "./../../stores.js";
   import { chunk } from "./../../helpers.js";
+
+  const runner = _ => {
+    const d = new Date().getTime()
+    const pdf_name = `${$schueler[0].klasse}_${$schueler[0].kurs}_${$schueler[0].jahr}_${d}.pdf`
+    $configData.gruppe_print_dialog && ipcRenderer.send('print')
+    $configData.gruppe_auto_pdf && ipcRenderer.send('pdf', pdf_name)
+  }
+
+  onMount(() => {
+    setTimeout(runner, 500);
+  });
 
   const anzahl = 30;
 </script>
