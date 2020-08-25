@@ -35,7 +35,7 @@
           <tr>
             <th />
             <th>Name</th>
-            <th>Vorame</th>
+            <th>Vorname</th>
             <th>Barcode</th>
             <th>Unterschrift</th>
           </tr>

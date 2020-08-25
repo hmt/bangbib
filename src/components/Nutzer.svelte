@@ -8,69 +8,59 @@
   let klasse;
   function ausleiher() {
     const res = $db
-      .prepare(
-        `
+      .prepare(`
       SELECT s.name, s.vorname, s.klasse, s.id, m.name as titel
       FROM ausleihe AS a
       LEFT JOIN medienexemplar AS x ON (x.id = a.medienexemplar_id)
       LEFT JOIN medienbezeichnung AS m ON (m.id = x.medienbezeichnung_id)
       LEFT JOIN schueler AS s ON (s.id = a.schueler_id)
-    `
-      )
+    `)
       .all();
     active = 1;
     return group_by(res, "klasse");
   }
   function ausleiher_vorjahr() {
     const res = $db
-      .prepare(
-        `
-      SELECT DISTINCT s.name, s.vorname, s.klasse, s.id
+      .prepare(`
+      SELECT s.name, s.vorname, s.klasse, s.id, m.name as titel
       FROM ausleihe AS a
       LEFT JOIN medienexemplar AS x ON (x.id = a.medienexemplar_id)
       LEFT JOIN medienbezeichnung AS m ON (m.id = x.medienbezeichnung_id)
       LEFT JOIN schueler AS s ON (s.id = a.schueler_id)
       WHERE a.jahr != s.jahr
-    `
-      )
+    `)
       .all();
     active = 2;
     return group_by(res, "klasse");
   }
   function schueler() {
     const res = $db
-      .prepare(
-        `
+      .prepare(`
       SELECT s.name, s.vorname, s.id, s.klasse
       FROM schueler AS s
-    `
-      )
+    `)
       .all();
     active = 5;
     return group_by(res, "klasse");
   }
   function nutzer_gesperrt() {
     const res = $db
-      .prepare(
-        `
+      .prepare(`
       SELECT s.name, s.vorname, s.id, s.klasse
       FROM schueler AS s
       WHERE s.gesperrt = 1;
-    `
-      )
+    `)
       .all();
     active = 3;
     return group_by(res, "klasse");
   }
   function sonstige_nutzer() {
     const res = $db
-      .prepare(
-        `
+      .prepare(`
       SELECT s.name, s.vorname, s.memo, s.id, s.klasse
       FROM schueler AS s
       WHERE s.nichtschueler = 1;
-    `
-      )
+    `)
       .all();
     active = 4;
     return group_by(res, "nichtschueler");
@@ -144,23 +134,27 @@
             <th />
             <th>Name</th>
             <th>Vorname</th>
-            <th>Bemerkung</th>
-            <th>Bemerkung</th>
+            <th>Bemerkung/Titel</th>
           </tr>
         </thead>
         <tbody>
-          {#each schueler as s, i}
+          {#each Object.entries(group_by(schueler, "id")) as [id, s], i}
             <tr
               class="pointer"
               on:click={_ => {
-                get_schueler({ id: s.id });
+                get_schueler({ id: s[0].id });
                 $view = Schueler;
               }}>
               <td>{i + 1}</td>
-              <td>{s.name}</td>
-              <td>{s.vorname}</td>
-              <td>{s.memo || "–"}</td>
-              <td>{s.titel || "–"}</td>
+              <td>{s[0].name}</td>
+              <td>{s[0].vorname}</td>
+              <td>{s[0].memo || "–"}
+                {#each s as ss}
+                  <ul>
+                    <li>{ss.titel || "–"}</li>
+                  </ul>
+                {/each}
+              </td>
             </tr>
           {/each}
         </tbody>
