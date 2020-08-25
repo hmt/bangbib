@@ -3,13 +3,23 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { is } from 'electron-util'
 import { join, dirname } from "path";
 import { writeFile, existsSync, mkdirSync } from "fs";
-import configData from './configstore'
+import Store from 'electron-store'
 import { VERSION } from './version'
 
 console.log(VERSION)
 if (process.argv.some(a => a === '-v')) app.exit()
 
 let mainWindow
+
+const configData = new Store({
+  defaults: {
+    windowBounds: {
+      main: { width: 1800, height: 800 }
+    },
+    user_data: app.getPath("userData"),
+    scan_prefix: ''
+  }
+});
 
 if (!configData.get('pdf_verzeichnis')) {
   configData.set('pdf_verzeichnis', join(app.getPath('documents'), app.getName(), 'Kurslisten'))
@@ -106,3 +116,6 @@ ipcMain.on('pdf', async (event, pdf_name) => {
     event.reply('pdf-reply', false)
   }
 });
+
+ipcMain.handle('get_store', (event, key) => configData.store );
+ipcMain.handle('set_store', (event, value) => configData.set(value))

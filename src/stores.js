@@ -1,9 +1,12 @@
 import { writable } from 'svelte/store';
-import configFile from './configstore';
+import { ipcRenderer } from 'electron';
 
-export const configData = writable(configFile.store);
-configData.subscribe(value => {
-  configFile.set(value)
+export const configData = writable();
+ipcRenderer.invoke("get_store").then((res) => {
+  configData.set(res);
+  configData.subscribe((value) => {
+    ipcRenderer.invoke("set_store", value);
+  });
 });
 
 export const schueler = writable([]);

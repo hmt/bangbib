@@ -1,22 +1,19 @@
-import { api } from "electron-util";
 import { ipcRenderer } from "electron";
-import { db } from "./stores.js";
+import { db, configData } from "./stores.js";
 import { join } from "path";
 import { get } from "svelte/store";
 import ley from 'ley'
 
 const Database = require("better-sqlite3");
 
-const userData = api.app.getPath("userData");
-const db_file = join(userData, "datenbank.sqlite");
-const cwd = isDev() ? join(__dirname, '..', 'src') : process.resourcesPath
-const ley_opts = { config: { database: db_file }, cwd, dir: "migrations" };
-
 function isDev() {
   return process.env.ELECTRON_DEV === '1';
 }
 
 export async function db_check() {
+  const db_file = join(get(configData).user_data, "datenbank.sqlite");
+  const cwd = isDev() ? join(__dirname, '..', 'src') : process.resourcesPath
+  const ley_opts = { config: { database: db_file }, cwd, dir: "migrations" };
   try {
     db.set(new Database(db_file, { fileMustExist: true }));
   } catch (e) {
