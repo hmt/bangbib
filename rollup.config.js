@@ -1,7 +1,7 @@
 import svelte from "rollup-plugin-svelte";
 import externals from 'rollup-plugin-node-externals'
-
-const production = process.env.NODE_ENV !== "development";
+import { VERSION } from './src/version'
+const production = VERSION.production
 
 export default [
   {

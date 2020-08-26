@@ -2,7 +2,7 @@
   import { configData, db, scan_status } from "./../stores.js";
   import { DontBubbleException } from './../exceptions.js'
   import { onDestroy } from 'svelte';
-  import { focus } from './../helpers.js';
+  import { focus, sort_by_name } from './../helpers.js';
 	onDestroy(() => $scan_status = {})
 
   export let scaninterface
@@ -158,7 +158,7 @@
               <div class="select is-fullwidth">
                 <select bind:value={medium_selected} id="auswahl">
                   <option>– nichts ausgewählt –</option>
-                  {#each medium as m}
+                  {#each medium.sort(sort_by_name) as m}
                     <option value={m.id}>{m.name}</option>
                   {/each}
                 </select>
