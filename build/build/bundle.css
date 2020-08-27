@@ -1,6 +1,0 @@
-@import "../node_modules/bulma/css/bulma.css";
-.wrapper.svelte-1pykctp.svelte-1pykctp{position:relative}.input.svelte-1pykctp.svelte-1pykctp{width:20rem}.items.svelte-1pykctp.svelte-1pykctp{position:absolute;border:1px solid #d4d4d4;z-index:99;top:100%;left:0;right:0;max-height:80vh;overflow:auto}.items.svelte-1pykctp div.svelte-1pykctp{padding:10px;cursor:pointer;background-color:#fff;border-bottom:1px solid #d4d4d4}.items.svelte-1pykctp div.svelte-1pykctp:hover{background-color:#e9e9e9}.active.svelte-1pykctp.svelte-1pykctp{background-color:DodgerBlue !important;color:#ffffff}
-.grid-container.svelte-1ed21v2{display:grid;grid-template-columns:250px 1fr;grid-template-rows:3.25rem calc(100vh - 3.25rem);grid-template-areas:"header header" "main main"}.main.svelte-1ed21v2{grid-area:main;overflow:auto}.header.svelte-1ed21v2{grid-area:header}.svelte-1ed21v2::-webkit-scrollbar{display:none}
-.brand.svelte-x8sbb2{text-transform:uppercase;padding-right:10px;cursor:pointer}.button.svelte-x8sbb2{margin-right:0.4rem;margin-left:0.4rem}
-
-/*# sourceMappingURL=bundle.css.map */

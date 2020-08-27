@@ -19,9 +19,9 @@ export default [
     plugins: [
       svelte({
         dev: !production,
-        css: css => {
-          css.write("build/bundle.css");
-        },
+        css: function (css) {
+          css.write('bundle.css');
+      },
         onwarn: (warning, handler) => {
           // if (warning.code === 'a11y-label-has-associated-control') return;
           handler(warning);
