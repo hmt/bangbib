@@ -72,7 +72,7 @@
       "INSERT INTO medienbezeichnung (name) VALUES (?)"
     );
     const insertMany = $db.transaction((medien) => {
-      for (const medium of medien) insert.run(medium);
+      for (const medium of medien) insert.run(medium.trim());
     });
     try {
       insertMany(medien);
