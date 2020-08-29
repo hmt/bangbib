@@ -119,12 +119,12 @@
           <td>{m.barcode}</td>
           <td>{m.jahr}</td>
           <td align="center">
-            <span class="icon has-text-danger pointer">
+            <span class="icon has-text-info pointer">
               <i
                 class="mdi"
                 alt="Exemplar löschen"
                 on:click={() => rueckgabe(m) && update()}>
-                delete_forever
+                arrow_back
               </i>
             </span>
           </td>

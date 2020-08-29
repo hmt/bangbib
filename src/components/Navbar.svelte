@@ -48,7 +48,7 @@
   <div class="navbar-item">
     <button class="button is-link" disabled={!print_allowed.includes($view)}>
       <span class="icon">
-        <i class="mdi" on:click={() => ($print = $view)}>print</i>
+        <i class="mdi" on:click={() => (print_allowed.includes($view) && ($print = $view))}>print</i>
       </span>
     </button>
   </div>

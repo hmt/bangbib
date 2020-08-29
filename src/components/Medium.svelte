@@ -1,6 +1,8 @@
 <script>
 console.log('Medium')
-  import { db } from "./../stores.js";
+  import { db, view } from "./../stores.js";
+  import Schueler from "./Schueler.svelte";
+  import { get_schueler } from "./../getter.js";
   export let medium = [];
   export let modal;
   export let update
@@ -33,6 +35,12 @@ console.log('Medium')
     `).run(e.exemplar_id)
     if (res) update()
     else console.log('Es gab einen Fehler beim Löschen des Exemplars')
+  };
+  const schueler_action = s => {
+    if (s.verliehen) {
+      get_schueler({ id: s.schueler_id });
+      $view = Schueler;
+    }
   };
 </script>
 
@@ -88,7 +96,7 @@ console.log('Medium')
             <tr>
               <td>{e.barcode}</td>
               {#if e.verliehen}
-                <td>{e.name}, {e.vorname}</td>
+                <td style="cursor:pointer" on:click={() => schueler_action(e)}>{e.name}, {e.vorname}</td>
                 <td>{e.klasse}</td>
                 <td>{e.jahr}</td>
               {:else}
