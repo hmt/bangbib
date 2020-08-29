@@ -61,7 +61,7 @@
     `
       )
       .get(barcode);
-    console.log('Ergebnis Barcodesuche in DB: ', res || '– nichts gefunden –');
+    console.log('Ergebnis Barcodesuche: ', res || '– nichts gefunden –');
     if (!res) {
       try {
         zuordnung(barcode);

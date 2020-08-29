@@ -15,7 +15,7 @@ console.log('Medium')
       UPDATE medienbezeichnung SET name=? WHERE id = ?
     `).run(m.medien_name, m.medien_id)
     if (res) update()
-    else console.log('Es gabe einen Fehler beim Ändern der Medienbezeichnung')
+    else console.log('Es gab einen Fehler beim Ändern der Medienbezeichnung')
   };
   const remove_medium = _ => {
     const res = $db.prepare(`
@@ -25,14 +25,14 @@ console.log('Medium')
       update()
       modal = false
     }
-    else console.log('Es gabe einen Fehler beim Löschen des Mediums')
+    else console.log('Es gab einen Fehler beim Löschen des Mediums')
   };
   const remove_exemplar = e => {
     const res = $db.prepare(`
       DELETE FROM medienexemplar WHERE id = ?
     `).run(e.exemplar_id)
     if (res) update()
-    else console.log('Es gabe einen Fehler beim Löschen des Exemplars')
+    else console.log('Es gab einen Fehler beim Löschen des Exemplars')
   };
 </script>
 

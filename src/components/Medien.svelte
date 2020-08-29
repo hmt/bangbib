@@ -90,7 +90,6 @@
     ),
     "medien_id"
   );
-  $: console.log(Object.entries(medien_filter))
   $: Object.keys(medien_filter).length === 1 &&
     (selected = Object.keys(medien_filter)[0]);
   const scaninterface = { update, rueckgabe, zuordnung };
