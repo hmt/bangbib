@@ -3,7 +3,7 @@
   import Medium from "./Medium.svelte";
   import Schueler from "./Schueler.svelte";
   import { view, db, print, medien } from "./../stores.js";
-  import { group_by, focus } from "./../helpers.js";
+  import { group_by, focus, sort_by_name } from "./../helpers.js";
   import * as notifier from "./../notifier.js";
   import { get_schueler } from "./../getter.js";
 
@@ -21,6 +21,7 @@
       LEFT JOIN medienexemplar AS x ON x.medienbezeichnung_id = m.id
       LEFT JOIN ausleihe AS a ON a.medienexemplar_id = x.id
       LEFT JOIN schueler AS s ON s.id = a.schueler_id
+      ORDER BY medien_name DESC
     `
       )
       .all();
@@ -78,6 +79,9 @@
     }
   };
   update();
+
+  const sort_by_medien_name = (a,b)=>a[1][0].medien_name.toUpperCase()<b[1][0].medien_name.toUpperCase() ? -1:1
+
   $: medien_filter = group_by(
     $medien.filter(
       m =>
@@ -86,6 +90,7 @@
     ),
     "medien_id"
   );
+  $: console.log(Object.entries(medien_filter))
   $: Object.keys(medien_filter).length === 1 &&
     (selected = Object.keys(medien_filter)[0]);
   const scaninterface = { update, rueckgabe, zuordnung };
@@ -126,19 +131,17 @@
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Titel</th>
             <th>V/G</th>
             <th />
           </tr>
         </thead>
         <tbody>
-          {#each Object.entries(medien_filter) as [n, m], i}
+          {#each Object.entries(medien_filter).sort(sort_by_medien_name) as [n, m], i}
             <tr
               class="pointer"
               on:click={_=> modal = true}
               on:mouseover={() => (selected = n)}>
-              <td>{m[0].medien_id}</td>
               <td>{m[0].medien_name}</td>
               <td>
                 {m.filter(i => i.verliehen).length}/{m.filter(i => i.exemplar_id).length}
