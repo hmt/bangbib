@@ -186,7 +186,7 @@
           <div class="control">
             <button
               class="button is-primary"
-              on:click={() => zuordnen(medium_selected)}>
+              on:click={() => neu_anlegen()}>
               Titel anlegen
             </button>
           </div>
