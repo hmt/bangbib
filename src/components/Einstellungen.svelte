@@ -65,9 +65,7 @@
     warten = false;
   };
   const update_medien = async () => {
-    const res = await parse(datensatz_medien, { comments: "#" });
-    const values = res.data;
-    const medien = values.map((b) => b[0]);
+    const medien = datensatz_medien.split("\n").filter(a=>a)
     const insert = $db.prepare(
       "INSERT INTO medienbezeichnung (name) VALUES (?)"
     );
