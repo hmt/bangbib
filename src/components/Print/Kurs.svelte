@@ -53,5 +53,13 @@
         </tbody>
       </table>
     </div>
+    <div class="grid-footer">
+        {$schueler[0].klasse} – {$schueler[0].kurs} – {$schueler[0].kurs_lehrer}
+        – {new Date().toLocaleDateString('de', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        })}
+    </div>
   </div>
 {/each}

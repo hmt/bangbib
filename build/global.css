@@ -141,7 +141,7 @@ Link: https://www.w3.org/TR/css3-page/#using-named-pages
   grid-area: main;
 }
 
-.footer {
+.grid-footer {
   grid-area: footer;
   align-self: end;
 }
