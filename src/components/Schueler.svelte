@@ -28,7 +28,7 @@
   function ausleihe (exemplar) {
     if (s.gesperrt) throw 'Nutzer gesperrt'
     const data = {
-      jahr: s.jahr,
+      jahr: s.jahr || new Date().getFullYear(),
       klasse: s.klasse,
       schueler_id: s.id,
       medienexemplar_id: exemplar.x_id,

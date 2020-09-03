@@ -13,7 +13,7 @@
       m.name AS medien_name,
       x.id AS exemplar_id,
       x.barcode,
-      a.id AS verliehen,
+      a.id AS verliehen, a.jahr AS ausleih_jahr,
       s.name, s.vorname, s.klasse, s.jahr, s.id AS schueler_id
       FROM medienbezeichnung AS m
       LEFT JOIN medienexemplar AS x ON x.medienbezeichnung_id = m.id

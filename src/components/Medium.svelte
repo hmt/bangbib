@@ -112,9 +112,9 @@
           <tr>
             <th>Barcode</th>
             <th>Schüler</th>
-            <th>Klasse</th>
-            <th>Jahr</th>
-            <th>Löschen</th>
+            <th align="center">Klasse</th>
+            <th align="center">Jahr</th>
+            <th align="center">Löschen</th>
           </tr>
         </thead>
         <tbody>
@@ -125,8 +125,22 @@
                 <td style="cursor:pointer" on:click={() => schueler_action(e)}>
                   {e.name}, {e.vorname}
                 </td>
-                <td>{e.klasse}</td>
-                <td>{e.jahr}</td>
+                  {#if e.klasse}
+                    <td align="center">{e.klasse}</td>
+                  {:else}
+                    <td align="center"><span class="icon">
+                      <i
+                      class="mdi"
+                      alt="Sonstiger Nutzer">
+                      face
+                      </i>
+                    </span></td>
+                  {/if}
+                  {#if e.jahr}
+                    <td align="center">{e.jahr}</td>
+                  {:else}
+                    <td align="center"><span>{e.ausleih_jahr}</span></td>
+                  {/if}
               {:else}
                 <td colspan="3" />
               {/if}
