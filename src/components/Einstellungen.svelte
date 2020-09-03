@@ -23,7 +23,7 @@
       notifier.fertig("Nutzer hinzugefügt");
     } catch (e) {
       console.log(e);
-      notifier.fehler("Fehler beim Hinzufügen des Nutzers:", e.message);
+      notifier.fehler(`Fehler beim Hinzufügen des Nutzers: ${e.message}`);
     }
   };
   const update_schueler = async () => {
@@ -59,7 +59,7 @@
       const res = $db.prepare(`SELECT COUNT(*) as anzahl FROM schueler`).get()
       notifier.fertig(`${schueler_values.length || 0} Datensätze verarbeitet; ${res.anzahl} Nutzer in der Datenbank.`);
     } catch (e) {
-      notifier.fehler("Fehler beim Schülerimport:", e.message);
+      notifier.fehler(`Fehler beim Schülerimport: ${e.message}`);
       console.log(e);
     }
     warten = false;
@@ -77,7 +77,10 @@
       datensatz_medien = "";
       notifier.fertig("Medientitel importiert");
     } catch (e) {
-      notifier.fehler("Fehler beim Medienimport:", e.message);
+      const msg = e.code === "SQLITE_CONSTRAINT_UNIQUE"
+        ? "Mindestens ein Titel ist bereits vorhanden"
+        : e.message
+      notifier.fehler(`Fehler beim Medienimport: ${msg}`);
       console.log(e);
     }
   };

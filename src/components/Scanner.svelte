@@ -15,6 +15,7 @@
     barcode_manuell,
     barcode_input,
     registrieren,
+    fehlermeldung,
     lastKeyTime = Date.now(),
     medium,
     neuer_titel = "",
@@ -93,6 +94,7 @@
 
   function neu_anlegen() {
     if (!neuer_titel.length) return
+    try {
     const res = $db
       .prepare(
         `
@@ -101,7 +103,14 @@
       )
       .run(neuer_titel.trim());
       neuer_titel = ''
+      fehlermeldung = null
       zuordnen(res.lastInsertRowid)
+    } catch (e) {
+      console.log("Fehler beim Anlegen eines neuen Titels: ", e)
+      if (e.code = "SQLITE_CONSTRAINT_UNIQUE") {
+        fehlermeldung = "Dieser Titel existiert bereits"
+      } else fehlermeldung = "Es ist ein Fehler aufgetreten"
+    }
   }
 
   function zuordnen(medien_id) {
@@ -178,7 +187,7 @@
           <div class="control is-expanded">
             <input
               id="neuwahl"
-              class="input is-fullwidth"
+              class="input is-fullwidth" class:is-danger={fehlermeldung}
               type="text"
               bind:value={neuer_titel}
               on:keydown={e => e.key === 'Enter' && neu_anlegen()} />
@@ -191,6 +200,11 @@
             </button>
           </div>
         </div>
+        {#if fehlermeldung}
+          <div class="notification is-danger">
+            {fehlermeldung}
+          </div>
+        {/if}
       </div>
     </div>
   </div>

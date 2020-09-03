@@ -1,7 +1,7 @@
 appId: im.hmt.bangbib
 productName: bangbib
 artifactName: bangbib.${ext}
-buildVersion: 1.0.${env.GITHUB_RUN_NUMBER}
+buildVersion: 1.1.${env.GITHUB_RUN_NUMBER}
 copyright: Copyright ${author}
 
 extraMetadata:
