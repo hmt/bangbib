@@ -6,7 +6,7 @@
 
   const runner = (_) => {
     const d = new Date().getTime();
-    const pdf_name = `${$schueler[0].klasse}_${$schueler[0].kurs}_${$schueler[0].jahr}_${d}.pdf`;
+    const pdf_name = `${$schueler[0].klasse}_${$schueler[0].kurs || ""}_${$schueler[0].jahr}_${d}.pdf`;
     $configData.gruppe_print_dialog && ipcRenderer.send("print");
     $configData.gruppe_auto_pdf && ipcRenderer.send("pdf", pdf_name);
   };
