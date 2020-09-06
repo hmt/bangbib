@@ -14,11 +14,13 @@
   ipcRenderer.on('print-reply', (event, arg) => {
     console.log('Print: ', arg)
   })
+  const d = new Date().getTime();
+  const pdf_name = `${$schueler[0].name}_${$schueler[0].vorname}_${$schueler[0].jahr}_${d}.pdf`;
 
   function handle_keydown(event) {
     if (event.key === "Escape") $print = false;
     if (event.key === 'p') ipcRenderer.send('print')
-    if (event.key === 's') ipcRenderer.send('pdf', pdf_name())
+    if (event.key === 's') ipcRenderer.send('pdf', pdf_name)
   }
 
   $: if ($print.name === 'Schueler') c = PrintSchueler
