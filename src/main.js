@@ -73,9 +73,7 @@ ipcMain.on('print', (event, arg) => {
   const options = {
     margins: 'none'
   }
-  mainWindow.webContents.print(options, (success, errorType) => {
-    event.reply('print-reply', success)
-  })
+  mainWindow.webContents.print(options)
 })
 
 function ensureDirectoryExistence(filePath) {
