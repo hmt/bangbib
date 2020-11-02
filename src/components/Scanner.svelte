@@ -13,7 +13,6 @@
   let buffer = [],
     barcode,
     barcode_manuell,
-    barcode_input,
     registrieren,
     fehlermeldung,
     lastKeyTime = Date.now(),
