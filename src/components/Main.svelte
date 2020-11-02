@@ -39,7 +39,4 @@
   .header {
     grid-area: header;
   }
-  ::-webkit-scrollbar {
-    display: none;
-  }
 </style>
