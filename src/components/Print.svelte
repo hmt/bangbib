@@ -1,5 +1,5 @@
 <script>
-  import { schueler, print, configData } from "./../stores.js";
+  import { schueler, print } from "./../stores.js";
   import { ipcRenderer } from 'electron'
   import PrintKurs from './Print/Kurs.svelte'
   import PrintSchueler from './Print/Schueler.svelte'
@@ -15,7 +15,9 @@
     console.log('Print: ', arg)
   })
   const d = new Date().getTime();
-  const pdf_name = `${$schueler[0].name}_${$schueler[0].vorname}_${$schueler[0].jahr}_${d}.pdf`;
+  const pdf_name = $schueler.length
+    ? `${$schueler[0].name}_${$schueler[0].vorname}_${$schueler[0].jahr}_${d}.pdf`
+    : `medien.pdf`
 
   function handle_keydown(event) {
     if (event.key === "Escape") $print = false;
