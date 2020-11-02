@@ -1,5 +1,4 @@
 <script>
-  console.log("Medium");
   import { db, view } from "./../stores.js";
   import Schueler from "./Schueler.svelte";
   import { get_schueler } from "./../getter.js";

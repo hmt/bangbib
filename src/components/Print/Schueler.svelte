@@ -1,6 +1,6 @@
 <script>
-  import { schueler, medien, titel } from "./../../stores.js";
-  import { group_by, chunk } from "./../../helpers.js";
+  import { schueler, medien } from "./../../stores.js";
+  import { chunk } from "./../../helpers.js";
   const s = $schueler[0];
   const anzahl = 30;
 </script>

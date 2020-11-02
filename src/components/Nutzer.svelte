@@ -1,6 +1,6 @@
 <script>
   import Schueler from "./Schueler.svelte";
-  import { view, db, print } from "./../stores.js";
+  import { view, db } from "./../stores.js";
   import { group_by } from "./../helpers.js";
   import { get_schueler } from "./../getter.js";
 
