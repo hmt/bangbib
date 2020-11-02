@@ -1,5 +1,5 @@
 <script>
-  import { view, schueler, db } from "./../stores.js";
+  import { view, db } from "./../stores.js";
   import { get_kurs, get_schueler } from './../getter.js';
   import Schueler from "./Schueler.svelte";
   import Kurs from "./Kurs.svelte";
