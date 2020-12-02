@@ -2,7 +2,7 @@
   import { configData, db, scan_status } from "./../stores.js";
   import { DontBubbleException } from './../exceptions.js'
   import { onDestroy } from 'svelte';
-  import { focus, sort_by_name } from './../helpers.js';
+  import { focus, sort_by_name, sql } from './../helpers.js';
 	onDestroy(() => $scan_status = {})
 
   export let scaninterface
@@ -52,7 +52,7 @@
   function scan() {
     const res = $db
       .prepare(
-        `
+        sql`
       SELECT x.barcode, x.id AS x_id, m.name, m.id AS m_id, x.medienbezeichnung_id, a.*, a.id AS ausleihe_id
       FROM medienexemplar x
       LEFT JOIN medienbezeichnung AS m ON (x.medienbezeichnung_id = m.id)
@@ -66,7 +66,7 @@
       try {
         zuordnung(barcode);
       } catch (e) {
-        medium = $db.prepare(`SELECT * FROM medienbezeichnung`).all();
+        medium = $db.prepare(sql`SELECT * FROM medienbezeichnung`).all();
         registrieren = true
         console.log(e, "Barcode unbekannt; Medium registrieren");
         return
@@ -96,7 +96,7 @@
     try {
     const res = $db
       .prepare(
-        `
+        sql`
       INSERT INTO medienbezeichnung (name) VALUES (?)
     `
       )
@@ -116,7 +116,7 @@
     if (!medien_id) return
     const res = $db
       .prepare(
-        `
+        sql`
       INSERT INTO medienexemplar (barcode, medienbezeichnung_id) VALUES (?,?)
     `
       )

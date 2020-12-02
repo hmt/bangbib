@@ -1,6 +1,7 @@
 <script>
   import { parse } from "papaparse";
   import { configData, db } from "./../stores.js";
+  import { sql } from "./../helpers.js";
   import * as notifier from "./../notifier.js";
 
   let datensatz_schueler = "",
@@ -14,7 +15,7 @@
       console.log(
         $db
           .prepare(
-            `
+            sql`
       INSERT INTO schueler (name, vorname, nichtschueler, memo) VALUES(:name, :vorname, :nichtschueler, :memo)
     `
           )
@@ -35,10 +36,10 @@
     });
     try {
       $db.prepare(
-        `DELETE FROM schueler WHERE nichtschueler=1 AND NOT EXISTS (SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`
+        sql`DELETE FROM schueler WHERE nichtschueler=1 AND NOT EXISTS (SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`
       ).run();
       const insert = $db.prepare(
-        `INSERT INTO schueler (schild_id, name, vorname, jahr, nichtschueler) VALUES(:id, :name, :vorname, :jahr, 1)
+        sql`INSERT INTO schueler (schild_id, name, vorname, jahr, nichtschueler) VALUES(:id, :name, :vorname, :jahr, 1)
         ON CONFLICT (schild_id) DO UPDATE SET jahr = :jahr`
       );
       const insertMany = $db.transaction((entries) => {
@@ -73,11 +74,11 @@
       .map((v) => `(${v.id}, '${v.kurs_lehrer || ""}', '${v.kurs || ""}')`)
       .join(",");
     const query = [
-      `DELETE FROM schueler WHERE NOT nichtschueler AND NOT EXISTS ( SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`,
-      `INSERT INTO schueler (schild_id, jahr, klasse, name, vorname) VALUES ${schueler_values}
+      sql`DELETE FROM schueler WHERE NOT nichtschueler AND NOT EXISTS ( SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`,
+      sql`INSERT INTO schueler (schild_id, jahr, klasse, name, vorname) VALUES ${schueler_values}
         ON CONFLICT (schild_id) DO UPDATE SET jahr = ${jahr}`,
-      `DELETE FROM kurszugehoerigkeit`,
-      `INSERT INTO kurszugehoerigkeit (schild_id, kurs_lehrer, kurs) VALUES ${kurszugehoerigkeit_values}`,
+      sql`DELETE FROM kurszugehoerigkeit`,
+      sql`INSERT INTO kurszugehoerigkeit (schild_id, kurs_lehrer, kurs) VALUES ${kurszugehoerigkeit_values}`,
     ];
     try {
       query.forEach((q) => $db.prepare(q).run());
@@ -97,7 +98,7 @@
   const update_medien = async () => {
     const medien = datensatz_medien.split("\n").filter((a) => a);
     const insert = $db.prepare(
-      "INSERT INTO medienbezeichnung (name) VALUES (?)"
+      sql`INSERT INTO medienbezeichnung (name) VALUES (?)`
     );
     const insertMany = $db.transaction((medien) => {
       for (const medium of medien) insert.run(medium.trim());

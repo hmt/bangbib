@@ -1,7 +1,7 @@
 <script>
   import Schueler from "./Schueler.svelte";
   import { view, db } from "./../stores.js";
-  import { group_by } from "./../helpers.js";
+  import { group_by, sql } from "./../helpers.js";
   import { get_schueler } from "./../getter.js";
 
   let active;
@@ -9,7 +9,7 @@
   function ausleiher() {
     const res = $db
       .prepare(
-        `
+        sql`
       SELECT s.name, s.vorname, s.klasse, s.id, m.name as titel
       FROM ausleihe AS a
       LEFT JOIN medienexemplar AS x ON (x.id = a.medienexemplar_id)
@@ -24,7 +24,7 @@
   function ausleiher_vorjahr() {
     const res = $db
       .prepare(
-        `
+        sql`
       SELECT s.name, s.vorname, s.klasse, s.id, m.name as titel
       FROM ausleihe AS a
       LEFT JOIN medienexemplar AS x ON (x.id = a.medienexemplar_id)
@@ -40,7 +40,7 @@
   function schueler() {
     const res = $db
       .prepare(
-        `
+        sql`
       SELECT s.name, s.vorname, s.id, s.klasse
       FROM schueler AS s
     `
@@ -52,7 +52,7 @@
   function nutzer_gesperrt() {
     const res = $db
       .prepare(
-        `
+        sql`
       SELECT s.name, s.vorname, s.id, s.klasse
       FROM schueler AS s
       WHERE s.gesperrt = 1;
@@ -65,7 +65,7 @@
   function sonstige_nutzer() {
     const res = $db
       .prepare(
-        `
+        sql`
       SELECT s.name, s.vorname, s.memo, s.id, s.klasse
       FROM schueler AS s
       WHERE s.nichtschueler = 1;
@@ -77,7 +77,7 @@
   }
   const zahlen_a = $db
     .prepare(
-      `
+      sql`
       SELECT
         sum(case when a.jahr != s.jahr then 1 else 0 end) as s,
         count(DISTINCT s.id) as a
@@ -88,7 +88,7 @@
     .get();
   const zahlen = $db
     .prepare(
-      `
+      sql`
     SELECT
       Count(*) as a,
       sum(case when nichtschueler = 1 then 0 else 1 end) as sch,

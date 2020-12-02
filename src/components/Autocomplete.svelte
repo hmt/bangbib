@@ -1,6 +1,7 @@
 <script>
   import { view, db } from "./../stores.js";
   import { get_kurs, get_schueler } from './../getter.js';
+  import { sql } from "./../helpers.js";
   import Schueler from "./Schueler.svelte";
   import Kurs from "./Kurs.svelte";
 
@@ -15,7 +16,7 @@
     selected = -1;
     const schueler = $db
       .prepare(
-        `SELECT *
+        sql`SELECT *
         FROM schueler
         WHERE vorname || ' ' || name LIKE $term
         OR name || ', ' || vorname LIKE $term`
@@ -23,7 +24,7 @@
       .all({term: "%"+ term + "%"});
     const kurse = $db
       .prepare(
-        `SELECT DISTINCT k.kurs, s.klasse, s.jahr
+        sql`SELECT DISTINCT k.kurs, s.klasse, s.jahr
         FROM kurszugehoerigkeit AS k
         JOIN schueler AS s ON (s.schild_id = k.schild_id)
         WHERE kurs LIKE $term OR klasse LIKE $term`

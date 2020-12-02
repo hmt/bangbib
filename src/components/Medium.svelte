@@ -1,6 +1,7 @@
 <script>
   import { db, view } from "./../stores.js";
   import Schueler from "./Schueler.svelte";
+  import { sql } from "./../helpers.js";
   import { get_schueler } from "./../getter.js";
   export let medium = [];
   export let modal;
@@ -14,7 +15,7 @@
     const m = medium[0];
     const res = $db
       .prepare(
-        `
+        sql`
       UPDATE medienbezeichnung SET name=? WHERE id = ?
     `
       )
@@ -25,7 +26,7 @@
   const remove_medium = (_) => {
     const res = $db
       .prepare(
-        `
+        sql`
       DELETE FROM medienbezeichnung WHERE id = ?
     `
       )
@@ -38,7 +39,7 @@
   const remove_exemplar = (e) => {
     const res = $db
       .prepare(
-        `
+        sql`
       DELETE FROM medienexemplar WHERE id = ?
     `
       )

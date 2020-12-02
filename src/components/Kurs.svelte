@@ -1,6 +1,7 @@
 <script>
   import Scanner from "./Scanner.svelte";
   import { schueler, view, db, medien, titel, print } from "./../stores.js";
+  import { sql } from "./../helpers.js";
   import * as notifier from "./../notifier.js";
   import { DontBubbleException } from "./../exceptions.js";
 
@@ -19,7 +20,7 @@
     if (!id) throw "Noch kein Titel festgelegt";
     const res = $db
       .prepare(
-        `
+        sql`
       INSERT INTO medienexemplar (barcode, medienbezeichnung_id) VALUES (?,?)
     `
       )
@@ -38,7 +39,7 @@
     }
     const res = $db
       .prepare(
-        `
+        sql`
       DELETE FROM ausleihe WHERE id = ?
     `
       )
@@ -61,7 +62,7 @@
     };
     const res = $db
       .prepare(
-        `
+        sql`
       INSERT INTO ausleihe
       (jahr, klasse, schueler_id, medienexemplar_id, kurs)
       VALUES (:jahr, :klasse, :schueler_id, :medienexemplar_id, :kurs)

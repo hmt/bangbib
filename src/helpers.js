@@ -25,3 +25,7 @@ export const sort_by_name = (a, b) => {
     }
     return 0;
 }
+export const sql = (strings, ...expr) =>
+  strings
+    .map((str, index) => str + (expr.length > index ? String(expr[index]) : ''))
+    .join('')

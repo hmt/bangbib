@@ -2,9 +2,10 @@
   import Medien from "./Medien.svelte";
   import Scanner from "./Scanner.svelte";
   import * as notifier from './../notifier.js'
+  import { sql } from "./../helpers.js";
   import { view, schueler, db, medien, print } from './../stores.js';
   function update () {
-    $medien = $db.prepare(`
+    $medien = $db.prepare(sql`
       SELECT a.*, x.*, m.*, a.id AS ausleihe_id
       FROM ausleihe as a
       LEFT JOIN medienexemplar AS x ON (x.id = a.medienexemplar_id)
@@ -14,7 +15,7 @@
   }
 
   function rueckgabe (exemplar) {
-    const res = $db.prepare(`
+    const res = $db.prepare(sql`
       DELETE FROM ausleihe WHERE id = ?
     `).run(exemplar.ausleihe_id)
     if (res) {
@@ -33,7 +34,7 @@
       medienexemplar_id: exemplar.x_id,
       kurs: s.kurs
     }
-    const res = $db.prepare(`
+    const res = $db.prepare(sql`
       INSERT INTO ausleihe
       (jahr, klasse, schueler_id, medienexemplar_id, kurs)
       VALUES (:jahr, :klasse, :schueler_id, :medienexemplar_id, :kurs)
@@ -52,19 +53,19 @@
   let yes
 
   const remove_schueler = _ => {
-    const res = $db.prepare(`
+    const res = $db.prepare(sql`
       DELETE FROM schueler WHERE id = ?
     `).run(s.id)
     if (res) { $view = Medien }
   }
   const suspend_schueler = _ => {
-    const res = $db.prepare(`
+    const res = $db.prepare(sql`
       UPDATE schueler SET gesperrt=? WHERE id = ?
     `).run(s.gesperrt ? 0 : 1, s.id)
     if (res) s.gesperrt = s.gesperrt ? 0 : 1
   }
   const edit_memo = _ => {
-    const res = $db.prepare(`
+    const res = $db.prepare(sql`
       UPDATE schueler SET memo=? WHERE id = ?
     `).run(s.memo, s.id)
   }

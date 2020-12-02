@@ -2,13 +2,13 @@
   import Scanner from "./Scanner.svelte";
   import Medium from "./Medium.svelte";
   import { db, print, medien } from "./../stores.js";
-  import { group_by } from "./../helpers.js";
+  import { group_by, sql } from "./../helpers.js";
   import * as notifier from "./../notifier.js";
 
   function update() {
     $medien = $db
       .prepare(
-        `
+        sql`
       SELECT m.id AS medien_id,
       m.name AS medien_name,
       x.id AS exemplar_id,
@@ -28,7 +28,7 @@
     console.log(exemplar);
     const res = $db
       .prepare(
-        `
+        sql`
       DELETE FROM ausleihe WHERE id = ?
     `
       )
@@ -41,7 +41,7 @@
     if (!modal) throw "Barcode unbekannt";
     const res = $db
       .prepare(
-        `
+        sql`
       INSERT INTO medienexemplar (barcode, medienbezeichnung_id) VALUES (?,?)
     `
       )
