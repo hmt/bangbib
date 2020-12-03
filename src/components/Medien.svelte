@@ -52,6 +52,21 @@
       notifier.zuordnung(medien_filter[selected][0].medien_name, barcode);
     }
   }
+  function neu_anlegen() {
+    if (!suche) return
+    try {
+    const res = $db
+      .prepare(
+        sql`
+      INSERT INTO medienbezeichnung (name) VALUES (?)
+    `
+      )
+      .run(suche.trim());
+      update()
+    } catch (e) {
+      console.log("Fehler beim Anlegen eines neuen Titels: ", e)
+    }
+  }
   let selected,
     suche = "",
     modal
@@ -80,10 +95,17 @@
   <Scanner {scaninterface} />
 {/if}
 <h2 class="title">Verfügbare Medien</h2>
-<div class="field">
+<div class="field has-addons">
   <div class="control">
-    <input class="input" type="text" placeholder="Titelsuche" bind:value={suche} />
+    <input class="input" style="width: 30rem" type="text" placeholder="Medium neu anlegen oder suche nach Titel/Barcode" bind:value={suche} />
   </div>
+  {#if !Object.keys(medien_filter).length && suche}
+  <div class="control">
+    <button class="button is-info" on:click={neu_anlegen}>
+      Anlegen
+    </button>
+  </div>
+  {/if}
 </div>
 {#if Object.keys(medien_filter).length}
   <table class="table">
@@ -109,7 +131,9 @@
       {/each}
     </tbody>
   </table>
-{:else}– Bibliothek? Es sind noch keine Medien eingetragen –{/if}
+{:else if suche} Dieser Titel existiert noch nicht.
+{:else} – Bibliothek? Es sind noch keine Medien eingetragen –
+{/if}
 {#if modal}
   <Medium medium={medien_filter[selected]} bind:modal {update} />
 {/if}
