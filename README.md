@@ -112,5 +112,19 @@ insert into medienexemplar (barcode, medienbezeichnung_id) select 'B'||printf('%
 
 In diesem Fall würde das Barcodes von B101 bis B110 für den Medientitel mit der ID 8 erzeugen. Wichtig ist selbstverständlich, dass noch keine Barcodes aus dieser Serie existieren und eine Medienid 8 eingetragen ist.
 
+### Entwicklung
+Bangbib kann auch ohne Installer ausprobiert werden. Dazu wird node benötigt und die für die jeweilige Plattform Entwicklertools, in diesem Fall gcc14 und SQLite-Header, damit die SQLite-Bibliothek kompiliert werden kann. Darüber hinaus noch node und npm.
+Ist alles soweit vorhanden, geht es so weiter:
+
+```
+git clone https://github.com/hmt/bangbib.git
+cd bangbib
+npm i
+npm run postinstall
+npm run dev
+```
+
+Damit wird bangbib gestartet und man kann loslegen.
+
 ### Lizenz
 Bangbib wird unter der MIT-Lizenz veröffentlich.
