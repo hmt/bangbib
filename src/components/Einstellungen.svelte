@@ -35,9 +35,11 @@
       header: true,
     });
     try {
-      $db.prepare(
-        sql`DELETE FROM schueler WHERE nichtschueler=1 AND NOT EXISTS (SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`
-      ).run();
+      $db
+        .prepare(
+          sql`DELETE FROM schueler WHERE nichtschueler=1 AND NOT EXISTS (SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`
+        )
+        .run();
       const insert = $db.prepare(
         sql`INSERT INTO schueler (schild_id, name, vorname, jahr, nichtschueler) VALUES(:id, :name, :vorname, :jahr, 1)
         ON CONFLICT (schild_id) DO UPDATE SET jahr = :jahr`
@@ -62,7 +64,7 @@
     });
     // id|name|vorname|jahr|klasse|kurs|kurs_lehrer
     const values = res.data;
-    let schueler = {}
+    let schueler = {};
     values.forEach((v) => {
       schueler[v.id] = [v.id, v.jahr, v.klasse, v.name, v.vorname];
     });
@@ -142,7 +144,8 @@
           placeholder="Füge Daten mit Kopfzeile ein:
       id|name|vorname|jahr|klasse|kurs|kurs_lehrer"
           rows="10"
-          cols="20" />
+          cols="20"
+        />
       </label>
     </div>
   </div>
@@ -152,7 +155,8 @@
         class="button is-{warten ? 'warning' : 'link'}"
         class:is-loading={warten}
         disabled={warten}
-        on:click={() => update_schueler()}>
+        on:click={() => update_schueler()}
+      >
         Aktualisieren
       </button>
     </div>
@@ -163,15 +167,16 @@
   <div class="field">
     <div class="control">
       <label class="label">
-        Achtung, alle sonstigen Nutzer (Lehrer etc.) werden entfernt und mit den neuen
-        Daten ersetzt. Ausgenommen sind Nutzer mit bestehenden Ausleihen.
+        Achtung, alle sonstigen Nutzer (Lehrer etc.) werden entfernt und mit den
+        neuen Daten ersetzt. Ausgenommen sind Nutzer mit bestehenden Ausleihen.
         <textarea
           class="textarea"
           bind:value={datensatz_block_sonstige}
           placeholder="Füge Daten mit Kopfzeile ein:
       id|name|vorname|jahr"
           rows="10"
-          cols="20" />
+          cols="20"
+        />
       </label>
     </div>
   </div>
@@ -181,7 +186,8 @@
         class="button is-{warten ? 'warning' : 'link'}"
         class:is-loading={warten}
         disabled={warten}
-        on:click={() => block_update_sonstige()}>
+        on:click={() => block_update_sonstige()}
+      >
         Aktualisieren
       </button>
     </div>
@@ -195,28 +201,32 @@
         class="input"
         type="text"
         placeholder="Name"
-        bind:value={datensatz_sonstige.name} />
+        bind:value={datensatz_sonstige.name}
+      />
     </div>
     <div class="control">
       <input
         class="input"
         type="text"
         placeholder="Vorname"
-        bind:value={datensatz_sonstige.vorname} />
+        bind:value={datensatz_sonstige.vorname}
+      />
     </div>
     <div class="control">
       <input
         class="input"
         type="text"
         placeholder="Bemerkungen"
-        bind:value={datensatz_sonstige.memo} />
+        bind:value={datensatz_sonstige.memo}
+      />
     </div>
     <div class="control">
       <button
         class="button is-{warten ? 'warning' : 'link'}"
         class:is-loading={warten}
         disabled={warten}
-        on:click={() => update_sonstige()}>
+        on:click={() => update_sonstige()}
+      >
         Aktualisieren
       </button>
     </div>
@@ -233,7 +243,8 @@
           bind:value={datensatz_medien}
           placeholder="Je ein Titel pro Zeile"
           rows="10"
-          cols="20" />
+          cols="20"
+        />
       </label>
     </div>
   </div>
@@ -272,12 +283,38 @@
     </p>
   </div>
   <div class="field">
+    <label class="checkbox">
+      <input type="checkbox" bind:checked={$configData.kontoauszug_beleg} />
+      Nutzerkontoauszüge als Beleg mit Unterschriftenfeld erzeugen
+    </label>
+    <p class="help">
+      Kann z.B. genutzt werden, um technische Geräte auszuleihen.
+    </p>
+  </div>
+  {#if $configData.kontoauszug_beleg}
+    <div class="field">
+      <label class="checkbox">
+        <input
+          type="checkbox"
+          bind:checked={$configData.kontoauszug_beleg_filter}
+        />
+        Belege nur für ausgewählte Medien verwenden
+      </label>
+      <p class="help">
+        So kann festgelegt werden, dass nur bestimmte Medien auf dem Beleg
+        auftauchen. Kann über die Medienanzeige ausgewählt werden.
+      </p>
+    </div>
+  {/if}
+  <div class="field">
     <p class="control">
-      <label class="label">PDF-Verzeichnis
+      <label class="label"
+        >PDF-Verzeichnis
         <input
           class="input"
           type="text"
-          bind:value={$configData.pdf_verzeichnis} />
+          bind:value={$configData.pdf_verzeichnis}
+        />
       </label>
     </p>
   </div>

@@ -1,7 +1,7 @@
 <script>
   import Scanner from "./Scanner.svelte";
   import Medium from "./Medium.svelte";
-  import { db, print, medien } from "./../stores.js";
+  import { db, print, medien, configData } from "./../stores.js";
   import { group_by, sql } from "./../helpers.js";
   import * as notifier from "./../notifier.js";
 
@@ -10,9 +10,9 @@
       .prepare(
         sql`
       SELECT m.id AS medien_id,
-      m.name AS medien_name,
+      m.name AS medien_name, m.beleg_filter,
       x.id AS exemplar_id,
-      x.barcode,
+      x.barcode, x.memo,
       a.id AS verliehen, a.jahr AS ausleih_jahr,
       s.name, s.vorname, s.klasse, s.jahr, s.id AS schueler_id
       FROM medienbezeichnung AS m
@@ -122,7 +122,8 @@
           class="pointer"
           on:click={(_) => (modal = true)}
           on:mouseover={() => (selected = n)}>
-          <td>{m[0].medien_name}</td>
+          <td>
+            {#if $configData.kontoauszug_beleg && $configData.kontoauszug_beleg_filter && m[0].beleg_filter}<span class="has-text-success">✔︎</span>{/if} {m[0].medien_name}</td>
           <td>
             {m.filter((i) => i.verliehen).length}/{m.filter((i) => i.exemplar_id).length}
           </td>
