@@ -1,8 +1,10 @@
 <script>
-  import { configData, db, scan_status } from "./../stores.js";
+  import { configData, db, scan_status, view } from "./../stores.js";
   import { DontBubbleException } from './../exceptions.js'
   import { onDestroy } from 'svelte';
   import { focus, sort_by_name, sql } from './../helpers.js';
+  import { get_schueler_by_schild_id } from "./../getter.js";
+  import Schueler from "./Schueler.svelte";
 	onDestroy(() => $scan_status = {})
 
   export let scaninterface
@@ -50,6 +52,17 @@
   }
 
   function scan() {
+    if (barcode.startsWith('schild')) {
+      const id = barcode.substring('schild'.length)
+      console.log('öffne Nutzer: ', id)
+      try {
+        get_schueler_by_schild_id({ id });
+      } catch (e) {
+        console.log(`Nutzer mit ID ${id} nicht gefunden`)
+      }
+      $view = Schueler;
+      return
+    }
     const res = $db
       .prepare(
         sql`

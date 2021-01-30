@@ -75,7 +75,7 @@
   <Scanner {scaninterface} />
 {/if}
 <h2 class="title">{s.name}, {s.vorname}</h2>
-<h2 class="sub-title">{s.klasse || 'Sonstiger Nutzer'}</h2>
+<h2 class="sub-title">{s.klasse || 'Sonstiger Nutzer'}, ID: {s.schild_id}</h2>
 <div class="field">
   {#if yes}
     <button class="button is-danger" on:click={()=>remove_schueler()}>Nutzer aus Datenbank löschen</button>
