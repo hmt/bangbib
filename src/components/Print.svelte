@@ -25,9 +25,9 @@
     if (event.key === 's') ipcRenderer.send('pdf', pdf_name)
   }
 
-  $: if ($print.name === 'Schueler') c = PrintSchueler
-     else if ($print.name === 'Kurs') c = PrintKurs;
-     else if ($print.name === 'Medien') c = PrintMedien;
+  $: if ($print.name.startsWith('Schueler')) c = PrintSchueler
+     else if ($print.name.startsWith('Kurs')) c = PrintKurs;
+     else if ($print.name.startsWith('Medien')) c = PrintMedien;
 </script>
 
 <svelte:window on:keydown={handle_keydown} />

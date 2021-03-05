@@ -1,4 +1,3 @@
-import url from 'url'
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { is } from 'electron-util'
 import { join, dirname } from "path";
@@ -30,20 +29,16 @@ function createWindow() {
     ...configData.get('windowBounds.main'),
     show: false,
     useContentSize: true,
-    defaultEncoding: 'utf-8',
     webPreferences: {
-      nodeIntegration: true
+      defaultEncoding: 'utf-8',
+      nodeIntegration: true,
+      contextIsolation: false
     },
     title: `${app.name} ${VERSION['buildVersion']}`
     // icon: join(__dirname, '../icons/icon.png')
   })
   mainWindow.removeMenu()
-  mainWindow.loadURL(
-    url.format({
-      pathname: join(__dirname, "index.html"),
-      protocol: "file:",
-      slashes: true
-    }))
+  mainWindow.loadURL(join(__dirname, "index.html"))
   if (is.development || process.argv.some(a => a === '--devtools')) mainWindow.openDevTools()
 
   mainWindow.on('close', e => {
