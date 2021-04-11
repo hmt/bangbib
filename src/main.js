@@ -45,8 +45,7 @@ function createWindow() {
       protocol: "file:",
       slashes: true
     }))
-  // mainWindow.loadURL(join(__dirname, "index.html"))
-  if (is.development || process.argv.some(a => a === '--devtools')) mainWindow.openDevTools()
+  if (is.development || process.argv.some(a => a === '--devtools')) mainWindow.webContents.openDevTools()
 
   mainWindow.on('close', e => {
     if (!configData.get('close')) {
