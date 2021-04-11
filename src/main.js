@@ -3,6 +3,7 @@ import { is } from 'electron-util'
 import { join, dirname } from "path";
 import { writeFile, existsSync, mkdirSync } from "fs";
 import Store from 'electron-store'
+import url from 'url'
 import { VERSION } from './version'
 
 console.log(VERSION)
@@ -38,7 +39,13 @@ function createWindow() {
     // icon: join(__dirname, '../icons/icon.png')
   })
   mainWindow.removeMenu()
-  mainWindow.loadURL(join(__dirname, "index.html"))
+  mainWindow.loadURL(
+    url.format({
+      pathname: join(__dirname, "index.html"),
+      protocol: "file:",
+      slashes: true
+    }))
+  // mainWindow.loadURL(join(__dirname, "index.html"))
   if (is.development || process.argv.some(a => a === '--devtools')) mainWindow.openDevTools()
 
   mainWindow.on('close', e => {
