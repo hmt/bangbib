@@ -21,6 +21,9 @@ const configData = new Store({
   }
 });
 
+if (!configData.get('db_verzeichnis')) {
+  configData.set('db_verzeichnis', join(configData.get('user_data'), "datenbank.sqlite"))
+}
 if (!configData.get('pdf_verzeichnis')) {
   configData.set('pdf_verzeichnis', join(app.getPath('documents'), app.getName(), 'Kurslisten'))
 }

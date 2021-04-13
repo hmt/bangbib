@@ -11,7 +11,7 @@ function isDev() {
 }
 
 export async function db_check() {
-  const db_file = join(get(configData).user_data, "datenbank.sqlite");
+  const db_file = get(configData).db_verzeichnis;
   const cwd = isDev() ? join(__dirname, '..', 'src') : process.resourcesPath
   const ley_opts = { config: { database: db_file }, cwd, dir: "migrations" };
   try {

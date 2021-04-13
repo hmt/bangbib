@@ -8,7 +8,8 @@
     datensatz_medien = "",
     datensatz_sonstige = { nichtschueler: 1, memo: "" },
     datensatz_block_sonstige = "",
-    warten;
+    warten,
+    show_restart;
 
   const update_sonstige = () => {
     try {
@@ -319,3 +320,22 @@
     </p>
   </div>
 </div>
+<div class="box">
+  <h3 class="title">Sonstige Einstellungen</h3>
+    <div class="field">
+      <p class="control">
+        <label class="label"
+          >Datenbank-Verzeichnis
+          <input
+            class="input"
+            type="text"
+            bind:value={$configData.db_verzeichnis}
+            on:blur={_=>show_restart = true}
+          />
+        </label>
+      </p>
+    </div>
+    {#if show_restart}
+      Bangbib bitte neu starten, um die neue Datenbank einzulesen.
+    {/if}
+  </div>
