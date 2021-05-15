@@ -1,11 +1,12 @@
 <script>
   import Schueler from "./Schueler.svelte";
-  import { view, db } from "./../stores.js";
+  import { db } from "./../stores.js";
   import { group_by, sql } from "./../helpers.js";
   import { get_schueler } from "./../getter.js";
 
   let active;
   let klasse;
+  let modal;
   function ausleiher() {
     const res = $db
       .prepare(
@@ -157,18 +158,18 @@
 {#if klasse}
   <div class="box">
     {#each Object.entries(klasse) as [k, schueler]}
-      <h3 class="title is-5 mt-2 mb-1">
+      <h3 class="title is-5 mt-1 mb-1">
         {k && k != 'null' && k != 'undefined' ? k : 'Sonstige'}
       </h3>
-      <p>
+      <div class="mb-2">
         {#each Object.entries(group_by(schueler, 'id')).sort(sort_by_name) as [id, s], i}
           <span
             class="pointer"
             on:click={(_) => {
               get_schueler({ id });
-              $view = Schueler;
+              modal = true
             }}>
-            {i + 1} {s[0].name}, {s[0].vorname} {s[0].memo ? s[0].memo : ''}
+            <b>{s[0].name}, {s[0].vorname} {s[0].memo ? s[0].memo : ''}</b>
           </span>
           {#if s[0].titel}
             <ul class="circle">
@@ -179,8 +180,23 @@
           {/if}
           <br>
         {/each}
-      </p>
+      </div>
     {:else}– Keine Nutzer eingetragen bisher –{/each}
+  </div>
+{/if}
+{#if modal}
+  <div class="modal" class:is-active={modal}>
+    <div class="modal-background" on:click={() => (modal = false)} />
+    <button
+      class="modal-close is-large"
+      aria-label="close"
+      on:click={() => (modal = false)}
+    />
+    <div class="modal-content">
+      <div class="box">
+        <Schueler />
+      </div>
+    </div>
   </div>
 {/if}
 
