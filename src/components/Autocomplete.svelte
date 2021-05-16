@@ -1,81 +1,44 @@
 <script>
-  import { view, db } from "./../stores.js";
-  import { get_kurs, get_schueler } from './../getter.js';
-  import { sql } from "./../helpers.js";
-  import Schueler from "./Schueler.svelte";
-  import Kurs from "./Kurs.svelte";
-
   let input;
   let term = "";
-  let res = [];
+  let select_from = [];
   let selected = -1;
   let items = [];
   let show;
+	
+	export let placeholder = "suche in Gruppen und Nutzern ..."
+	export let search
+	export let result = undefined
+	
+	const ret_selected = sel => {
+    result = sel
+    select_from = [];
+    selected = -1;
+    term = "";
+    input.blur();
+  }
 
   $: if (term.length > 1) {
     selected = -1;
-    const schueler = $db
-      .prepare(
-        sql`SELECT *
-        FROM schueler
-        WHERE vorname || ' ' || name LIKE $term
-        OR name || ', ' || vorname LIKE $term`
-      )
-      .all({term: "%"+ term + "%"});
-    const kurse = $db
-      .prepare(
-        sql`SELECT DISTINCT k.kurs, s.klasse, s.jahr
-        FROM kurszugehoerigkeit AS k
-        JOIN schueler AS s ON (s.schild_id = k.schild_id)
-        WHERE kurs LIKE $term OR klasse LIKE $term`
-      )
-      .all({term: term + "%"});
-    const res_s = schueler.map(s => {
-      return { id: s.id, name: `${s.name}, ${s.vorname}`, schueler: true };
-    });
-    const res_k = kurse.map(k => {
-      return {
-        id: k.kurs,
-        name: `${k.kurs} – ${k.klasse}`,
-        klasse: k.klasse,
-        jahr: k.jahr
-      };
-    });
-    res = res_k.concat(res_s);
+		select_from = search(term)
   }
-  $: if (term.length < 2) res = [];
+  $: if (term.length < 2) select_from = [];
+	
   const key = e => {
     if (e.key === "ArrowDown") selected += 1;
     else if (e.key === "ArrowUp") selected -= 1;
     else if (e.key === "Enter" && selected >= 0) {
-      show_selected(res[selected]);
+      ret_selected(select_from[selected]);
       return;
     } else return;
-    if (selected > res.length - 1) selected = 0;
-    if (selected < 0) selected = res.length - 1;
+    if (selected > select_from.length - 1) selected = 0;
+    if (selected < 0) selected = select_from.length - 1;
     e.preventDefault();
     items[selected].scrollIntoView({ block: "center", inline: "nearest" });
   };
   const blur = _ => {
     setTimeout(_ => (show = false), 500);
   };
-
-  function show_selected(item) {
-    res = [];
-    selected = -1;
-    term = "";
-    input.blur();
-    // hole Schüler
-    if (item.schueler) {
-      get_schueler(item);
-      $view = Schueler;
-    }
-    // hole Kurs
-    else {
-      get_kurs(item);
-      $view = Kurs;
-    }
-  }
 </script>
 
 <style>
@@ -114,20 +77,20 @@
   <input
     class="input"
     type="text"
-    placeholder="suche in Gruppen und Nutzern ..."
+    {placeholder}
     bind:this={input}
     bind:value={term}
     on:keydown={key}
     on:blur={blur}
     on:focus={() => (show = true)} />
-  {#if res.length && show}
+  {#if select_from.length && show}
     <div class="items">
-      {#each res as r, i}
+      {#each select_from as item, i}
         <div
-          on:click={() => show_selected(r)}
+          on:click={() => ret_selected(item)}
           class:active={selected === i}
           bind:this={items[i]}>
-          {r.name}
+          {item.info}
         </div>
       {/each}
     </div>
