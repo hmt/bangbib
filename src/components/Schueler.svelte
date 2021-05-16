@@ -1,4 +1,5 @@
 <script>
+  import Autocomplete from "./Autocomplete.svelte";
   import Medien from "./Medien.svelte";
   import Scanner from "./Scanner.svelte";
   import * as notifier from "./../notifier.js";
@@ -63,8 +64,20 @@
 
   $: s = $schueler[0];
   $: s && update();
-  let yes;
+  let remove;
   let memo;
+  let migrate;
+  let result;
+
+  const search = term => $db
+    .prepare(
+      sql`SELECT *
+      FROM schueler
+      WHERE vorname || ' ' || name LIKE $term
+      OR name || ', ' || vorname LIKE $term`
+    )
+    .all({term: "%"+ term + "%"})
+    .map(s => ({ id: s.id, info: `${s.name}, ${s.vorname}`, schueler: true }))
 
   const remove_schueler = (_) => {
     const res = $db
@@ -109,6 +122,19 @@
     else console.log("Es gab einen Fehler beim Eintragen der Memo");
     memo = undefined;
   };
+  const migrate_schueler = _ => {
+    const res = $db
+      .prepare(
+        sql`
+      UPDATE ausleihe SET schueler_id=? WHERE schueler_id = ?
+    `
+      )
+      .run(result.id, s.id);
+    notifier.fertig(`${s.name}, ${s.vorname} wurde erfolgreich migriert.`)
+    result = undefined
+    migrate = false
+    remove_schueler()
+  }
 </script>
 
 {#if !$print}
@@ -117,24 +143,20 @@
 <h2 class="title">{s.name}, {s.vorname}</h2>
 <h2 class="sub-title">{s.klasse || "Sonstiger Nutzer"}, ID: {s.schild_id}</h2>
 <div class="field">
-  {#if yes}
-    <button class="button is-danger" on:click={() => remove_schueler()}
-      >Nutzer aus Datenbank löschen</button
+    <button class="button is-danger" on:click={_=>remove=true}
+      >Nutzer löschen …</button
     >
-  {:else}
-    <label class="checkbox is-danger">
-      <input type="checkbox" bind:checked={yes} /> Löschen aktivieren. Der Nutzer
-      und alle Leihgaben können aus der Datenbank gelöscht werden.</label
-    >
-  {/if}
-</div>
-<div class="field">
   <button
     class="button"
     class:is-warning={s.gesperrt}
     class:is-success={!s.gesperrt}
     on:click={() => suspend_schueler()}
     >Nutzer {s.gesperrt ? "ent" : ""}sperren</button
+  >
+  <button
+    class="button is-success"
+    on:click={() => migrate = true}
+    >Nutzer migrieren …</button
   >
 </div>
 <div class="field">
@@ -212,4 +234,51 @@
   </table>
 {:else}
   – Keine Medien geliehen –
+{/if}
+{#if migrate}
+<div class="modal" class:is-active={migrate}>
+  <div class="modal-background" on:click={() => (migrate = false)} ></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Nutzerkonto migrieren</p>
+      <button class="delete" aria-label="close" on:click={() => (migrate = false)}></button>
+    </header>
+    <section class="modal-card-body" style="padding-bottom: 12rem">
+      <div class="field">
+        Wähle einen Nutzer aus, zu dem alle Ausleihen migriert werden.
+        <Autocomplete {search} bind:result={result} placeholder="Nutzer suchen"></Autocomplete>
+      </div>
+      {#if result}
+      <div class=block>
+        <b>{result.info}</b> für die Migration ausgewählt.
+        <br>Achtung, bei erfolgreicher Migration wird der alte Nutzer gelöscht.
+      </div>
+      {/if}
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" on:click={migrate_schueler}>Migrieren</button>
+      <button class="button" on:click={_=>migrate=false}>Abbrechen</button>
+    </footer>
+  </div>
+</div>
+{/if}
+{#if remove}
+<div class="modal" class:is-active={remove}>
+  <div class="modal-background" on:click={() => (remove = false)} ></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Nutzerkonto löschen</p>
+      <button class="delete" aria-label="close" on:click={() => (remove = false)}></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        Achtung, alle mit diesem Nutzer verbundenen Daten werden gelöscht, ausgeliehene Medien werden automatisch zurückgegeben.
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-danger" on:click={remove_schueler}>Löschen</button>
+      <button class="button" on:click={_=>remove=false}>Abbrechen</button>
+    </footer>
+  </div>
+</div>
 {/if}
