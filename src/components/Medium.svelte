@@ -135,7 +135,7 @@
           {#each medien_filter.sort((a, b) => a.barcode - b.barcode) as e, id}
             <tr>
               <td style="cursor:pointer" on:click={(_) => (memo = id)}>
-                ✎ {e.barcode}
+                <span class:has-text-danger={e.memo}>✎</span> {e.barcode}
               </td>
               {#if e.verliehen}
                 <td style="cursor:pointer" on:click={() => schueler_action(e)}>
