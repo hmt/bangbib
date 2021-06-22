@@ -43,9 +43,8 @@
       buffer = [];
       scan();
     } else {
-      const charList = "abcdefghijklmnopqrstuvwxyz0123456789";
-      const key = event.key.toLowerCase();
-      if (charList.indexOf(key) === -1) return;
+      const charList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      if (charList.indexOf(event.key) === -1) return;
       buffer.push(event.key);
       lastKeyTime = currentTime;
     }
