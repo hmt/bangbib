@@ -77,9 +77,9 @@
       .map((v) => `(${v.id}, '${v.kurs_lehrer || ""}', '${v.kurs || ""}')`)
       .join(",");
     const query = [
-      sql`DELETE FROM schueler WHERE NOT nichtschueler AND NOT EXISTS ( SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`,
+      sql`DELETE FROM schueler WHERE nichtschueler IS NULL AND NOT EXISTS ( SELECT * FROM ausleihe WHERE ausleihe.schueler_id = schueler.id)`,
       sql`INSERT INTO schueler (schild_id, jahr, klasse, name, vorname) VALUES ${schueler_values}
-        ON CONFLICT (schild_id) DO UPDATE SET jahr = ${jahr}`,
+        ON CONFLICT (schild_id) DO UPDATE SET jahr = excluded.jahr, klasse = excluded.klasse`,
       sql`DELETE FROM kurszugehoerigkeit`,
       sql`INSERT INTO kurszugehoerigkeit (schild_id, kurs_lehrer, kurs) VALUES ${kurszugehoerigkeit_values}`,
     ];
