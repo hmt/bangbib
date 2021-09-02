@@ -99,7 +99,7 @@
     `
       )
       .run(s.gesperrt ? 0 : 1, s.id);
-    if (res) s.gesperrt = s.gesperrt ? 0 : 1;
+    if (res) s.gesperrt = s.gesperrt ? false : true;
   };
   const edit_memo = (_) => {
     const res = $db
