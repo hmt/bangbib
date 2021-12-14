@@ -121,7 +121,7 @@
         <tr
           class="pointer"
           on:click={(_) => (modal = true)}
-          on:mouseover={() => (selected = n)}>
+          on:mouseover:focus={() => (selected = n)}>
           <td>
             {#if $configData.kontoauszug_beleg && $configData.kontoauszug_beleg_filter && m[0].beleg_filter}<span class="has-text-success">✔︎</span>{/if} {m[0].medien_name}</td>
           <td>

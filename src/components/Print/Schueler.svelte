@@ -57,6 +57,14 @@
         wurde von einer sorgeberechtigen Person zugestimmt.
         <br />
         <br />Datum, Unterschrift: _________________________________
+        <br />
+        <br />
+        <b>Dieser Bogen ist im Sekretariat abzugeben</b>
+        <hr>
+        <br />
+        Die Klassenleitung bestätigt die Rückgabe der oben aufgeführten Medien/Gegenstände.
+        <br />
+        <br />Datum, Unterschrift: _________________________________
       {/if}
     </div>
   </div>
