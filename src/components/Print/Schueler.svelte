@@ -92,6 +92,7 @@
           Die Klassenleitung bestätigt die Rückgabe der oben aufgeführten Medien/Gegenstände.
           <br />
           <br />Datum, Unterschrift: _________________________________
+        {#if x === 2}<br><b>Dieser Abschnitt ist {`${s.name}, ${s.vorname}`} auszuhändigen</b><br>{/if}
         {/each}
       {/if}
     </div>
