@@ -118,10 +118,11 @@
     </thead>
     <tbody>
       {#each Object.entries(medien_filter).sort(sort_by_medien_name) as [n, m], i}
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <tr
           class="pointer"
           on:click={(_) => (modal = true)}
-          on:mouseover:focus={() => (selected = n)}>
+          on:mouseover={() => (selected = n)}>
           <td>
             {#if $configData.kontoauszug_beleg && $configData.kontoauszug_beleg_filter && m[0].beleg_filter}<span class="has-text-success">✔︎</span>{/if} {m[0].medien_name}</td>
           <td>

@@ -5,8 +5,8 @@
   const anzahl = 30;
   $: medien_filter =
     $configData.kontoauszug_beleg_filter && $configData.kontoauszug_beleg
-    ? $medien.filter(m=>m.beleg_filter)
-    : $medien
+      ? $medien.filter((m) => m.beleg_filter)
+      : $medien;
 </script>
 
 {#each chunk(medien_filter, anzahl) as slice, i}
@@ -50,7 +50,8 @@
     <div class="grid-footer">
       {#if $configData.kontoauszug_beleg}
         <br />
-        <b>{`${s.name}, ${s.vorname}`}</b> bestätigt, die oben aufgeführten
+        
+        <b>{`${s.name}, ${s.vorname}`} {#if s.klasse}– {s.klasse}{/if}</b> bestätigt, die oben aufgeführten
         Medien/Gegenstände engegengenommen und allen dazugehörigen
         Nutzungsvereinbarungen und Einverständniserklärungen zugestimmt zu
         haben. <br /> Sofern der Nutzer oder die Nutzerin nicht volljährig ist,
@@ -60,11 +61,38 @@
         <br />
         <br />
         <b>Dieser Bogen ist im Sekretariat abzugeben</b>
-        <hr>
+        <hr />
         <br />
-        Die Klassenleitung bestätigt die Rückgabe der oben aufgeführten Medien/Gegenstände.
-        <br />
-        <br />Datum, Unterschrift: _________________________________
+        {#each [1, 2] as x}
+        {#if x === 2}<br><b>Dieser Bogen ist im Sekretariat abzugeben</b><hr>{/if}
+          <b>{`${s.name}, ${s.vorname}`} {#if s.klasse}– {s.klasse}{/if}</b> gibt folgende Medien/Gegenstände
+          zurück:
+          {#if $medien.length}
+            <table class="table">
+              <thead>
+                <tr>
+                  <th />
+                  <th>Titel</th>
+                  <th>Barcode</th>
+                  <th>Memo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {#each slice as m, ii}
+                  <tr>
+                    <td>{i * anzahl + ii + 1}</td>
+                    <td>{m.name}</td>
+                    <td>{m.barcode}</td>
+                    <td>{m.memo || "–"}</td>
+                  </tr>
+                {/each}
+              </tbody>
+            </table>
+          {:else}– Keine Medien geliehen –{/if}
+          Die Klassenleitung bestätigt die Rückgabe der oben aufgeführten Medien/Gegenstände.
+          <br />
+          <br />Datum, Unterschrift: _________________________________
+        {/each}
       {/if}
     </div>
   </div>
