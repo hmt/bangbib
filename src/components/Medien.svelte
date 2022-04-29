@@ -89,6 +89,10 @@
   $: Object.keys(medien_filter).length === 1 &&
     (selected = Object.keys(medien_filter)[0]);
   const scaninterface = { update, rueckgabe, zuordnung };
+  let suchfeld;
+  $: if (Object.keys(medien_filter).length === 1 && Object.values(medien_filter)[0].length === 1) {
+    suchfeld.select()
+    };
 </script>
 
 {#if !$print}
@@ -97,7 +101,7 @@
 <h2 class="title">Verfügbare Medien</h2>
 <div class="field has-addons">
   <div class="control">
-    <input class="input" style="width: 30rem" type="text" placeholder="Medium neu anlegen oder suche nach Titel/Barcode" bind:value={suche} />
+    <input class="input" style="width: 30rem" type="text" placeholder="Medium neu anlegen oder Suche nach Titel/Barcode" bind:value={suche} bind:this="{suchfeld}"/>
   </div>
   {#if !Object.keys(medien_filter).length && suche}
   <div class="control">
