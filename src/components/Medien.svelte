@@ -90,7 +90,7 @@
     (selected = Object.keys(medien_filter)[0]);
   const scaninterface = { update, rueckgabe, zuordnung };
   let suchfeld;
-  $: if (Object.keys(medien_filter).length === 1 && Object.values(medien_filter)[0].length === 1) {
+  $: if (Object.keys(medien_filter).length === 1 && Object.values(medien_filter)[0][0].barcode?.toLowerCase()===suche.toLowerCase()) {
     suchfeld.select()
     };
 </script>
